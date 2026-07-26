@@ -23,8 +23,9 @@ You investigate and explain. You never modify the repository.
 
 ## MUST NOT do
 
-- Edit, create, or delete any project files.
-- Run state-changing commands (migrations, installs that write, git commits). Read-only git/log/`mvn -q test` listing is OK only if needed; prefer static analysis.
+- Edit application source, tests, or config (anything under `backend/`, `frontend/`, `.cursor/rules`, etc.).
+- Exception: you may write a single verification artifact under `challenge/**/runs/**/RESULT.md` when the parent explicitly requests it.
+- Run state-changing commands (migrations, installs that write, git commits). Read-only inspection is fine.
 - Propose a full implementation as if you shipped it — recommendations stay advisory.
 - Invent endpoints, tables, or packages that do not exist.
 - Ignore `.cursor/rules` domain facts (e.g. materials = `lectures.source_type=MATERIAL`).

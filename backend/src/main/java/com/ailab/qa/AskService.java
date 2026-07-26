@@ -109,6 +109,6 @@ public class AskService {
         long totalSec = startMs / 1000;
         long mm = totalSec / 60;
         long ss = totalSec % 60;
-        return String.format("%d:%d", mm, ss);
+        return String.format("%d:%02d", mm, ss);
     }
 }

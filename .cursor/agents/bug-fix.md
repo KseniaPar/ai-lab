@@ -22,7 +22,8 @@ You fix defects. You do not add features or refactors beyond the minimal fix.
    - Run targeted tests: `mvn -q test` in `backend/` (Maven may be at `llm-chat-app\.tools\apache-maven-3.9.6\bin\mvn.cmd`).
    - If no test exists for the bug, add a focused regression test that failed before the fix and passes after.
    - Compile if tests are insufficient: `mvn -q -DskipTests compile`.
-6. Check blast radius: related callers, SQLite type quirks (`toLong`), auth ownership, JSON camelCase.
+   - Prefer fixing production code so existing tests pass; do not weaken assertions.
+6. Check blast radius: related callers, SQLite type quirks (`toLong`), auth ownership, JSON camelCase, citation/UI label formatting.
 
 ## MUST NOT do
 

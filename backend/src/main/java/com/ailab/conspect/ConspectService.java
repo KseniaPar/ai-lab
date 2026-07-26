@@ -57,4 +57,11 @@ public class ConspectService {
                         "createdAt", row.createdAt()))
                 .orElseThrow(() -> new IllegalArgumentException("Конспект ещё не создан"));
     }
+
+    public String exportMarkdown(String courseId) {
+        courses.requireOwned(courseId);
+        return conspects.findLatestByCourse(courseId)
+                .map(ConspectRepository.ConspectRow::markdown)
+                .orElseThrow(() -> new IllegalArgumentException("Конспект ещё не создан"));
+    }
 }

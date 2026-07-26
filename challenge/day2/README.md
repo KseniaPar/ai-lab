@@ -18,4 +18,5 @@ Custom Cursor subagents live in `.cursor/agents/` (see [Subagents](https://curso
 
 ## Iteration notes
 
-See `ITERATIONS.md` for what changed in profiles after first attempts.
+See `ITERATIONS.md` for first-shot results and post-success profile tweaks.
+Artifact logs: `runs/bug-fix/RESULT.md`, `runs/research/RESULT.md`, `runs/feature-builder/RESULT.md`.

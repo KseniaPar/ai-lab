@@ -21,7 +21,8 @@ You ship a small, complete vertical slice that matches existing patterns.
 5. Wire controller (`CourseAiController` for `/api/courses/{courseId}/...`), update README API table.
 6. Ensure `SecurityException` → 403 in `ApiExceptionHandler`.
 7. Compile: `mvn -q -DskipTests compile` in `backend/`. Add a minimal test when logic is pure/easy.
-8. UI only if the task asks; reuse `api()` from `frontend/js/api.js`.
+8. UI only if the task asks; reuse `api()` from `frontend/js/api.js` for JSON.
+   For file downloads (`text/markdown`, blobs), `fetch` + Bearer from `getToken()` is OK — do not force JSON `api()` parsing.
 
 ## MUST NOT do
 
