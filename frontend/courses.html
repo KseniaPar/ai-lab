@@ -50,10 +50,26 @@
         for (const c of courses) {
           const li = document.createElement('li');
           li.innerHTML = `<div><strong>${c.title}</strong><div class="muted">${c.subject || ''}</div></div>`;
+          const actions = document.createElement('div');
+          actions.className = 'row';
           const a = document.createElement('a');
           a.href = `/course.html?id=${c.id}`;
           a.textContent = 'Открыть';
-          li.appendChild(a);
+          const del = document.createElement('button');
+          del.type = 'button';
+          del.className = 'secondary';
+          del.textContent = 'Удалить';
+          del.onclick = async () => {
+            try {
+              await api(`/api/courses/${c.id}`, { method: 'DELETE' });
+              await refresh();
+            } catch (e) {
+              err.textContent = e.message;
+            }
+          };
+          actions.appendChild(a);
+          actions.appendChild(del);
+          li.appendChild(actions);
           list.appendChild(li);
         }
       } catch (e) {
