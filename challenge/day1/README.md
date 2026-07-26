@@ -15,7 +15,9 @@ See `BATTLE_PROMPT.md` — same text both runs.
 
 ## Artifacts
 
-- `rules-v1/` — rules snapshot before iteration (optional copies)
+- `rules-v1-snapshot/` — rules before iteration
 - `generation-v1/` — first assistant output (diff + notes)
 - `generation-v2/` — second assistant output after rules v2
 - `COMPARISON.md` — diff analysis + what improved quality most
+
+Final code on branch `day1` is the **v2** generation (kept).
