@@ -42,6 +42,7 @@ npm run dev
 | POST | `/api/courses/{id}/corpus/build` |
 | GET | `/api/courses/{id}/outline` |
 | POST/GET | `/api/courses/{id}/conspect` |
+| GET | `/api/courses/{id}/conspect/export` (Markdown download) |
 | POST | `/api/courses/{id}/ask` |
 | GET | `/api/stats` |
 

@@ -50,6 +50,7 @@
       <div class="row">
         <button id="genConspect">Сгенерировать конспект</button>
         <button class="secondary" id="loadConspect">Показать последний</button>
+        <button class="secondary" id="exportConspect">Скачать Markdown</button>
       </div>
       <div class="pre" id="conspect" style="margin-top:12px">—</div>
     </div>
@@ -67,7 +68,7 @@
   </div>
 
   <script type="module">
-    import { api, clearAuth, requireAuth } from '/js/api.js';
+    import { api, clearAuth, getToken, requireAuth } from '/js/api.js';
     if (!requireAuth()) throw new Error('auth');
 
     const params = new URLSearchParams(location.search);
@@ -219,6 +220,32 @@
       try {
         const r = await api(`/api/courses/${courseId}/conspect`);
         document.getElementById('conspect').textContent = r.markdown;
+      } catch (e) {
+        setMsg(e.message, '');
+      }
+    };
+
+    document.getElementById('exportConspect').onclick = async () => {
+      try {
+        const res = await fetch(`/api/courses/${courseId}/conspect/export`, {
+          headers: { Authorization: `Bearer ${getToken()}` },
+        });
+        if (!res.ok) {
+          let msg = res.statusText;
+          try {
+            const data = await res.json();
+            msg = data.error || msg;
+          } catch { /* non-JSON */ }
+          throw new Error(msg);
+        }
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `conspect-${courseId}.md`;
+        a.click();
+        URL.revokeObjectURL(url);
+        setMsg('', 'Конспект скачан');
       } catch (e) {
         setMsg(e.message, '');
       }
