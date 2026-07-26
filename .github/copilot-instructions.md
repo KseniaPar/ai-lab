@@ -18,4 +18,7 @@ You are working in **Knowbase** (`ai-lab`): Java 17 / Spring Boot 3.4 / SQLite /
 - `frontend/js/api.js`
 
 ## New course endpoint checklist
-1. Ownership check 2. Input validation 3. Repository if persistence needed 4. Wire controller 5. Match existing URL style under `/api/courses/{id}/...`
+1. Dedicated aggregate service (not `CourseService` CRUD bloat)
+2. `requireOwned` 3. Input validation 4. Repository SQL only; no dual access paths
+5. Wire `CourseAiController` 6. 403 for `SecurityException` 7. README API row
+8. Materials are `lectures` with `source_type=MATERIAL`

@@ -1,9 +1,9 @@
 ---
-description: Knowbase core — stack, architecture, ownership, AI workflow
+description: Knowbase core — stack, architecture, ownership, AI workflow (rules v2)
 alwaysApply: true
 ---
 
-# Knowbase (ai-lab)
+# Knowbase (ai-lab) — rules v2
 
 Личная платформа: аудио → STT → корпус → конспект → Q&A с цитатами.
 **Нет** карты понятий и видео-пайплайна.
@@ -13,28 +13,28 @@ alwaysApply: true
 - Backend: Java 17, Spring Boot 3.4, SQLite (`JdbcTemplate`), JWT, Spring AI / OpenRouter
 - Frontend: Vite + vanilla JS (без React/TS)
 - Ports: API `8081`, UI `5173`
-- Secrets: только `application-local.yml` / env — **никогда** не коммитить ключи
+- Secrets: only `application-local.yml` / env — **never** commit keys
 
 ## Architecture
 
-Package-by-feature under `com.ailab.*`:
-`auth`, `course`, `lecture`, `corpus`, `conspect`, `qa`, `stt`, `llm`, `db`, `common`, `stats`, `config`.
+Package-by-feature under `com.ailab.*`.
+Layers: `*Controller` → `*Service` → `*Repository`.
+`CourseService` = **ownership + CRUD only**; aggregates → dedicated services.
+Ownership: `CourseService.requireOwned(courseId)` before course-scoped work.
+Errors: `IllegalArgumentException` / `IllegalStateException` / `SecurityException` → `{ "error": "..." }`; SecurityException **must be 403**.
+JSON: camelCase; prefer `LinkedHashMap` for multi-key payloads.
 
-Layers: `*Controller` → `*Service` → `*Repository` (JdbcTemplate + nested `record` rows).
-Ownership: always `CourseService.requireOwned(courseId)` before course-scoped work.
-Errors: throw `IllegalArgumentException` / `IllegalStateException` / `SecurityException`; JSON `{ "error": "..." }` via `ApiExceptionHandler`.
-API responses: `Map<String, Object>` / `List<Map<...>>` with camelCase keys (`createdAt`, not `created_at`).
+## Domain
+
+Materials are `lectures` rows with `source_type = MATERIAL`.
 
 ## Agent workflow
 
-- Local rules: `.cursor/rules/*.mdc` (this repo)
-- Global Cursor user rules: high-level prefs only; **project rules win** on conflicts
-- Skill: `.cursor/skills/add-course-endpoint/SKILL.md` for new course APIs
-- Subagents: use explore for codebase search; shell for mvn/git; keep one-shot battle prompts atomic
+- Local: `.cursor/rules/*.mdc` (wins on conflicts)
+- Global: Cursor User Rules — see `challenge/day1/GLOBAL_USER_RULES.snippet.md`
+- Skill: `.cursor/skills/add-course-endpoint/SKILL.md`
+- Subagents: one-shot implementers; no clarification loops on battle prompts
 
 ## Do not
 
-- Add concept-map / video features
-- Put SQL in controllers or frontend
-- Log secrets or full JWT tokens
-- Introduce React/TypeScript without explicit request
+- Concept-map / video features; SQL in controllers; log secrets; React/TS without request; bloat `CourseService`

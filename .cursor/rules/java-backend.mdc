@@ -21,7 +21,13 @@ alwaysApply: false
 2. Validate inputs in service; Russian messages (`"title обязателен"`)
 3. SQL only in repositories, parameterized (`?`), text blocks for multi-line SQL
 4. SQLite nullables: use `toLong(rs.getObject(...))` — never cast `Integer`→`Long` blindly
-5. Course AI routes live on `/api/courses/{courseId}/...` (see `CourseAiController`)
+5. Course AI/aggregate routes on `/api/courses/{courseId}/...` via `CourseAiController`
+6. **`CourseService` = ownership + CRUD only.** New aggregates (outline/export/stats-for-course) → dedicated `*Service` (e.g. `CourseOutlineService`), inject `CourseService` for `requireOwned`
+7. If you add `ConspectRepository` (or any feature repo), wire it into that feature's `*Service` too — **no dual JdbcTemplate + Repository SQL**
+8. Boolean existence: `SELECT 1 ... LIMIT 1` / exists helper — not `COUNT(*) > 0` unless you need the count
+9. Multi-field JSON: `LinkedHashMap` for stable key order; nested maps camelCase
+10. User-facing routes: add a row to `README.md` API table
+11. `SecurityException` must map to **403** in `ApiExceptionHandler` (`{ "error": "..." }`)
 
 ## File template
 
@@ -52,6 +58,11 @@ public class FeatureService {
 }
 ```
 
+## Domain reminders
+
+- Materials are rows in `lectures` with `source_type = 'MATERIAL'` (not a separate table)
+- Conspects live in `conspects`; chunks in `chunks`
+
 ## Antipatterns (forbidden)
 
 - ❌ Field/`@Autowired` injection
@@ -59,4 +70,6 @@ public class FeatureService {
 - ❌ Swallowing exceptions / empty catch
 - ❌ Returning entities with snake_case JSON keys
 - ❌ Skipping `requireOwned` on course-scoped endpoints
+- ❌ Bloated `CourseService` with unrelated aggregate queries
+- ❌ New repository while leaving the same table queried via raw `JdbcTemplate` elsewhere
 - ❌ Committing `application-local.yml` or hardcoding API keys

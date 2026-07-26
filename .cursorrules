@@ -74,10 +74,12 @@ public ResponseEntity<Map<String, String>> badRequest(IllegalArgumentException e
 6. Concept-map endpoints or tables
 
 ## Typical new endpoint file set
-1. Optional `*Repository` methods (SQL only here)
-2. `*Service` method: `requireOwned` → validate → work → `Map` response
-3. Mapping on existing `CourseAiController` or feature `*Controller`
-4. Update README API table if user-facing
+1. Optional `*Repository` methods (SQL only here; share with feature service — no dual access)
+2. **Dedicated** aggregate `*Service` (keep `CourseService` CRUD-only): `requireOwned` → work → `LinkedHashMap` response
+3. Mapping on `CourseAiController` for `/api/courses/{courseId}/...`
+4. `SecurityException` → 403 in `ApiExceptionHandler`
+5. Update README API table
+6. Materials = `lectures.source_type = MATERIAL`
 
 ## Config layers
 - **Global** (user Cursor rules): personal prefs, language, commit style

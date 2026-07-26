@@ -23,10 +23,10 @@ frontend/{login,courses,course}.html  js/api.js  css/app.css
 - Secrets in `application-local.yml` (gitignored) or env
 
 ## Prefer
-Constructor injection, thin controllers, reuse `LlmGateway` / `CorpusService` / `api()` helper.
+Constructor injection, thin controllers, dedicated aggregate services (not bloated `CourseService`), reuse `LlmGateway` / `CorpusService` / `api()` helper, `SecurityException`→403, README API updates.
 
 ## Avoid
-Field injection, SQL in controllers, skipping ownership, committing keys, React/TS, concept-map features, `console.log` of tokens.
+Field injection, SQL in controllers, skipping ownership, dual JdbcTemplate+Repository for same table, committing keys, React/TS, concept-map features, `console.log` of tokens.
 
 ## Agent notes
 Read `.cursor/rules/` and skill `add-course-endpoint` before adding APIs. Project rules override global user prefs on conflicts.
