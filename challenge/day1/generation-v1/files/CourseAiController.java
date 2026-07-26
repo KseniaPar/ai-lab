@@ -13,22 +13,22 @@ public class CourseAiController {
     public record AskRequest(String question) {
     }
 
+    private final CourseService courseService;
     private final ConspectService conspectService;
     private final AskService askService;
-    private final CourseOutlineService outlineService;
 
     public CourseAiController(
+            CourseService courseService,
             ConspectService conspectService,
-            AskService askService,
-            CourseOutlineService outlineService) {
+            AskService askService) {
+        this.courseService = courseService;
         this.conspectService = conspectService;
         this.askService = askService;
-        this.outlineService = outlineService;
     }
 
     @GetMapping("/outline")
     public Map<String, Object> outline(@PathVariable String courseId) {
-        return outlineService.outline(courseId);
+        return courseService.outline(courseId);
     }
 
     @PostMapping("/conspect")

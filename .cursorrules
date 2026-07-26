@@ -1,0 +1,88 @@
+# Knowbase — Cursor / agent rules (compat)
+
+This file mirrors project guidance for tools that read `.cursorrules`.
+Canonical, scoped rules live in `.cursor/rules/*.mdc`. Also see `CLAUDE.md` and `.github/copilot-instructions.md`.
+
+## Product
+Knowbase: exam-prep knowledge base. Flow: audio lecture → STT → corpus (+ materials) → conspect → Q&A with citations. No concept map.
+
+## Stack
+Java 17, Spring Boot 3.4, SQLite + JdbcTemplate, JWT, OpenRouter (chat + Whisper). Frontend: Vite + vanilla JS. API :8081, UI :5173.
+
+## Architecture
+`com.ailab.<feature>` package-by-feature. Controller → Service → Repository. Always `CourseService.requireOwned(courseId)` for course data. Errors → `{ "error": "..." }` (Russian messages). JSON camelCase maps.
+
+## Good examples (copy these shapes)
+
+### 1) Ownership + validation (CourseService)
+```java
+public CourseRepository.CourseRow requireOwned(String courseId) {
+    String userId = AuthContext.requireUserId();
+    CourseRepository.CourseRow course = courses.findById(courseId)
+            .orElseThrow(() -> new IllegalArgumentException("Курс не найден"));
+    if (!course.userId().equals(userId)) {
+        throw new SecurityException("Нет доступа к курсу");
+    }
+    return course;
+}
+```
+
+### 2) Thin controller + nested record (CourseController)
+```java
+public record CreateCourseRequest(String title, String subject) {}
+
+@PostMapping
+public Map<String, Object> create(@RequestBody CreateCourseRequest request) {
+    return courseService.create(request.title(), request.subject());
+}
+```
+
+### 3) Repository SQL + SQLite Long helper (ChunkRepository)
+```java
+jdbc.update("""
+    INSERT INTO chunks(id, lecture_id, course_id, ordinal, text, start_ms, end_ms)
+    VALUES (?,?,?,?,?,?,?)
+    """, row.id(), row.lectureId(), row.courseId(), row.ordinal(), row.text(),
+    row.startMs(), row.endMs());
+// use toLong(rs.getObject("start_ms")) when reading nullable longs
+```
+
+### 4) Frontend API helper (js/api.js)
+```js
+export async function api(path, options = {}) {
+  const headers = { ...(options.headers || {}) };
+  const token = getToken();
+  if (token) headers.Authorization = `Bearer ${token}`;
+  // ... parse JSON, throw Error(data.error) on !res.ok
+}
+```
+
+### 5) Global API errors (ApiExceptionHandler)
+```java
+@ExceptionHandler(IllegalArgumentException.class)
+public ResponseEntity<Map<String, String>> badRequest(IllegalArgumentException ex) {
+    return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
+}
+```
+
+## Antipatterns
+1. SQL or business logic in controllers / HTML
+2. Skipping ownership checks
+3. Hardcoded secrets / committing `application-local.yml`
+4. `console.log` of auth tokens; noisy debug in committed UI
+5. New stacks (React, JPA entities for everything) without request
+6. Concept-map endpoints or tables
+
+## Typical new endpoint file set
+1. Optional `*Repository` methods (SQL only here; share with feature service — no dual access)
+2. **Dedicated** aggregate `*Service` (keep `CourseService` CRUD-only): `requireOwned` → work → `LinkedHashMap` response
+3. Mapping on `CourseAiController` for `/api/courses/{courseId}/...`
+4. `SecurityException` → 403 in `ApiExceptionHandler`
+5. Update README API table
+6. Materials = `lectures.source_type = MATERIAL`
+
+## Config layers
+- **Global** (user Cursor rules): personal prefs, language, commit style
+- **Local** (this repo `.cursor/rules`): stack & patterns — take precedence
+- **Skill** `.cursor/skills/add-course-endpoint`: checklist for course APIs
+- **Subagents**: explore / shell / one-shot implementers for isolated tasks

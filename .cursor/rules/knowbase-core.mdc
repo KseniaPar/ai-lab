@@ -1,0 +1,40 @@
+---
+description: Knowbase core — stack, architecture, ownership, AI workflow (rules v2)
+alwaysApply: true
+---
+
+# Knowbase (ai-lab) — rules v2
+
+Личная платформа: аудио → STT → корпус → конспект → Q&A с цитатами.
+**Нет** карты понятий и видео-пайплайна.
+
+## Stack
+
+- Backend: Java 17, Spring Boot 3.4, SQLite (`JdbcTemplate`), JWT, Spring AI / OpenRouter
+- Frontend: Vite + vanilla JS (без React/TS)
+- Ports: API `8081`, UI `5173`
+- Secrets: only `application-local.yml` / env — **never** commit keys
+
+## Architecture
+
+Package-by-feature under `com.ailab.*`.
+Layers: `*Controller` → `*Service` → `*Repository`.
+`CourseService` = **ownership + CRUD only**; aggregates → dedicated services.
+Ownership: `CourseService.requireOwned(courseId)` before course-scoped work.
+Errors: `IllegalArgumentException` / `IllegalStateException` / `SecurityException` → `{ "error": "..." }`; SecurityException **must be 403**.
+JSON: camelCase; prefer `LinkedHashMap` for multi-key payloads.
+
+## Domain
+
+Materials are `lectures` rows with `source_type = MATERIAL`.
+
+## Agent workflow
+
+- Local: `.cursor/rules/*.mdc` (wins on conflicts)
+- Global: Cursor User Rules — see `challenge/day1/GLOBAL_USER_RULES.snippet.md`
+- Skill: `.cursor/skills/add-course-endpoint/SKILL.md`
+- Subagents: one-shot implementers; no clarification loops on battle prompts
+
+## Do not
+
+- Concept-map / video features; SQL in controllers; log secrets; React/TS without request; bloat `CourseService`
