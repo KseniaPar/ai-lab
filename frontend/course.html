@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Knowbase — курс</title>
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="nav">
+      <div>
+        <a href="/courses.html">← Курсы</a>
+        <h1 id="courseTitle" style="margin:8px 0 0">Курс</h1>
+        <p class="muted" id="courseSubject"></p>
+      </div>
+      <button class="secondary" id="logout">Выйти</button>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h2>Аудио лекция → STT</h2>
+        <input id="audioTitle" placeholder="Название" style="width:100%;margin-bottom:8px" />
+        <input id="audioFile" type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.webm" />
+        <button id="uploadAudio" style="margin-top:8px">Загрузить и транскрибировать</button>
+        <p class="muted">mp3 / m4a / wav · большие файлы режутся на части автоматически</p>
+      </div>
+      <div class="card">
+        <h2>Доп. материалы</h2>
+        <input id="matTitle" placeholder="Название" style="width:100%;margin-bottom:8px" />
+        <input id="matFile" type="file" accept=".txt,.md,.markdown,text/plain" style="margin-bottom:8px" />
+        <textarea id="matBody" placeholder="Или вставь текст заметки / конспекта / слайдов…"></textarea>
+        <div class="row" style="margin-top:8px">
+          <button id="uploadMatFile">Загрузить файл</button>
+          <button id="uploadMatText" class="secondary">Добавить текст</button>
+        </div>
+        <p class="muted">.txt / .md — в корпус без STT</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row" style="justify-content:space-between">
+        <h2 style="margin:0">Источники курса</h2>
+        <button class="secondary" id="rebuild">Rebuild corpus</button>
+      </div>
+      <ul class="list" id="lectures"></ul>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <button id="genConspect">Сгенерировать конспект</button>
+        <button class="secondary" id="loadConspect">Показать последний</button>
+      </div>
+      <div class="pre" id="conspect" style="margin-top:12px">—</div>
+    </div>
+
+    <div class="card">
+      <h2>Вопрос по курсу</h2>
+      <textarea id="question" placeholder="Экзаменационный вопрос…"></textarea>
+      <button id="ask" style="margin-top:8px">Спросить</button>
+      <div class="pre" id="answer" style="margin-top:12px">—</div>
+      <ul class="list" id="citations"></ul>
+    </div>
+
+    <p id="err" class="error"></p>
+    <p id="ok" class="ok"></p>
+  </div>
+
+  <script type="module">
+    import { api, clearAuth, requireAuth } from '/js/api.js';
+    if (!requireAuth()) throw new Error('auth');
+
+    const params = new URLSearchParams(location.search);
+    const courseId = params.get('id');
+    if (!courseId) location.href = '/courses.html';
+
+    const err = document.getElementById('err');
+    const ok = document.getElementById('ok');
+    function setMsg(e, o) {
+      err.textContent = e || '';
+      ok.textContent = o || '';
+    }
+
+    document.getElementById('logout').onclick = () => {
+      clearAuth();
+      location.href = '/login.html';
+    };
+
+    async function loadCourse() {
+      const c = await api(`/api/courses/${courseId}`);
+      document.getElementById('courseTitle').textContent = c.title;
+      document.getElementById('courseSubject').textContent = c.subject || '';
+    }
+
+    async function loadLectures() {
+      const items = await api(`/api/courses/${courseId}/lectures`);
+      const ul = document.getElementById('lectures');
+      ul.innerHTML = '';
+      for (const l of items) {
+        const li = document.createElement('li');
+        const preview = (l.rawText || '').slice(0, 120);
+        li.innerHTML = `<div>
+          <strong>${l.title}</strong>
+          <span class="badge">${l.sourceType}</span>
+          <span class="badge">${l.status}</span>
+          <div class="muted">${preview}${(l.rawText || '').length > 120 ? '…' : ''}</div>
+        </div>`;
+        ul.appendChild(li);
+      }
+    }
+
+    document.getElementById('uploadMatText').onclick = async () => {
+      setMsg('', 'Сохраняю материал…');
+      try {
+        await api(`/api/courses/${courseId}/materials`, {
+          method: 'POST',
+          body: JSON.stringify({
+            title: document.getElementById('matTitle').value,
+            text: document.getElementById('matBody').value,
+          }),
+        });
+        document.getElementById('matBody').value = '';
+        setMsg('', 'Материал добавлен в корпус');
+        await loadLectures();
+      } catch (e) {
+        setMsg(e.message, '');
+      }
+    };
+
+    document.getElementById('uploadMatFile').onclick = async () => {
+      const file = document.getElementById('matFile').files[0];
+      if (!file) return setMsg('Выберите .txt или .md', '');
+      setMsg('', 'Загружаю файл…');
+      try {
+        const fd = new FormData();
+        fd.append('file', file);
+        const title = document.getElementById('matTitle').value;
+        if (title) fd.append('title', title);
+        const token = localStorage.getItem('knowbase_token');
+        const res = await fetch(`/api/courses/${courseId}/materials/file`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
+          body: fd,
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || res.statusText);
+        setMsg('', `Материал «${data.title}» в корпусе`);
+        await loadLectures();
+      } catch (e) {
+        setMsg(e.message, '');
+      }
+    };
+
+    document.getElementById('uploadAudio').onclick = async () => {
+      const file = document.getElementById('audioFile').files[0];
+      if (!file) return setMsg('Выберите файл', '');
+      setMsg('', `Загружаю ${file.name} (${Math.round(file.size/1024)} KB)…`);
+      try {
+        const fd = new FormData();
+        fd.append('file', file);
+        const title = document.getElementById('audioTitle').value;
+        if (title) fd.append('title', title);
+        const token = localStorage.getItem('knowbase_token');
+        const res = await fetch(`/api/courses/${courseId}/lectures`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
+          body: fd,
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || res.statusText);
+        setMsg('', `Файл принят, статус: ${data.status}. Жду STT…`);
+        await loadLectures();
+        await pollLecture(data.id);
+      } catch (e) {
+        setMsg(e.message, '');
+      }
+    };
+
+    async function pollLecture(lectureId) {
+      for (let i = 0; i < 600; i++) {
+        await new Promise(r => setTimeout(r, 3000));
+        const lec = await api(`/api/lectures/${lectureId}`);
+        await loadLectures();
+        if (lec.status === 'READY') {
+          setMsg('', `Транскрипт готов (${(lec.rawText || '').length} символов)`);
+          return;
+        }
+        if (lec.status === 'FAILED') {
+          setMsg(lec.rawText || 'STT failed', '');
+          return;
+        }
+        const progress = lec.rawText && lec.rawText.startsWith('part ') ? lec.rawText : lec.status;
+        setMsg('', `STT… ${Math.round((i + 1) * 3 / 60)} мин · ${progress}`);
+      }
+      setMsg('STT слишком долго. Смотри логи backend (нарезка + Whisper по частям).', '');
+    }
+
+    document.getElementById('rebuild').onclick = async () => {
+      try {
+        const r = await api(`/api/courses/${courseId}/corpus/build`, { method: 'POST', body: '{}' });
+        setMsg('', `Corpus: ${r.chunkCount} chunks`);
+      } catch (e) {
+        setMsg(e.message, '');
+      }
+    };
+
+    document.getElementById('genConspect').onclick = async () => {
+      setMsg('', 'Генерирую конспект…');
+      try {
+        const r = await api(`/api/courses/${courseId}/conspect`, { method: 'POST', body: '{}' });
+        document.getElementById('conspect').textContent = r.markdown;
+        setMsg('', 'Конспект готов');
+      } catch (e) {
+        setMsg(e.message, '');
+      }
+    };
+
+    document.getElementById('loadConspect').onclick = async () => {
+      try {
+        const r = await api(`/api/courses/${courseId}/conspect`);
+        document.getElementById('conspect').textContent = r.markdown;
+      } catch (e) {
+        setMsg(e.message, '');
+      }
+    };
+
+    document.getElementById('ask').onclick = async () => {
+      setMsg('', 'Ищу ответ…');
+      try {
+        const r = await api(`/api/courses/${courseId}/ask`, {
+          method: 'POST',
+          body: JSON.stringify({ question: document.getElementById('question').value }),
+        });
+        document.getElementById('answer').textContent = r.answer;
+        const ul = document.getElementById('citations');
+        ul.innerHTML = '';
+        for (const c of r.citations || []) {
+          const li = document.createElement('li');
+          const ts = c.timestamp ? ` @ ${c.timestamp}` : '';
+          li.innerHTML = `<div><strong>[${c.index}]${ts}</strong><div class="muted">${c.excerpt}</div></div>`;
+          ul.appendChild(li);
+        }
+        setMsg('', 'Готово');
+      } catch (e) {
+        setMsg(e.message, '');
+      }
+    };
+
+    await loadCourse();
+    await loadLectures();
+  </script>
+</body>
+</html>

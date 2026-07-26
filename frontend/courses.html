@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Knowbase — курсы</title>
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="nav">
+      <div>
+        <h1 style="margin:0">Курсы</h1>
+        <p class="muted" id="stats" style="margin:4px 0 0"></p>
+      </div>
+      <button class="secondary" id="logout">Выйти</button>
+    </div>
+    <div class="card">
+      <h2>Новый курс</h2>
+      <div class="row">
+        <input id="title" placeholder="Название" style="flex:2" />
+        <input id="subject" placeholder="Предмет" style="flex:1" />
+        <button id="create">Создать</button>
+      </div>
+      <p id="err" class="error"></p>
+    </div>
+    <ul class="list" id="list"></ul>
+  </div>
+  <script type="module">
+    import { api, clearAuth, requireAuth } from '/js/api.js';
+    if (!requireAuth()) throw new Error('auth');
+
+    document.getElementById('logout').onclick = () => {
+      clearAuth();
+      location.href = '/login.html';
+    };
+
+    async function refresh() {
+      const err = document.getElementById('err');
+      err.textContent = '';
+      try {
+        const [courses, stats] = await Promise.all([
+          api('/api/courses'),
+          api('/api/stats'),
+        ]);
+        document.getElementById('stats').textContent =
+          `курсов: ${stats.courseCount} · лекций: ${stats.lectureCount} · чанков: ${stats.chunkCount}`;
+        const list = document.getElementById('list');
+        list.innerHTML = '';
+        for (const c of courses) {
+          const li = document.createElement('li');
+          li.innerHTML = `<div><strong>${c.title}</strong><div class="muted">${c.subject || ''}</div></div>`;
+          const a = document.createElement('a');
+          a.href = `/course.html?id=${c.id}`;
+          a.textContent = 'Открыть';
+          li.appendChild(a);
+          list.appendChild(li);
+        }
+      } catch (e) {
+        err.textContent = e.message;
+      }
+    }
+
+    document.getElementById('create').onclick = async () => {
+      try {
+        await api('/api/courses', {
+          method: 'POST',
+          body: JSON.stringify({
+            title: document.getElementById('title').value,
+            subject: document.getElementById('subject').value,
+          }),
+        });
+        document.getElementById('title').value = '';
+        document.getElementById('subject').value = '';
+        await refresh();
+      } catch (e) {
+        document.getElementById('err').textContent = e.message;
+      }
+    };
+
+    refresh();
+  </script>
+</body>
+</html>

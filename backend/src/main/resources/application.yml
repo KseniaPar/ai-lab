@@ -1,0 +1,52 @@
+server:
+  port: 8081
+
+spring:
+  profiles:
+    active: local
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+  application:
+    name: knowbase
+  datasource:
+    url: jdbc:sqlite:${app.database.path}
+    driver-class-name: org.sqlite.JDBC
+  ai:
+    openai:
+      api-key: ${app.openrouter.api-key}
+      base-url: ${app.openrouter.base-url}
+      chat:
+        options:
+          model: ${app.openrouter.model}
+          temperature: 0.3
+          max-tokens: 2500
+
+app:
+  database:
+    path: data/knowbase.db
+  uploads:
+    path: data/uploads
+  auth:
+    jwt-secret: ${JWT_SECRET:knowbase-dev-secret-change-me-please-32chars}
+    jwt-expiration-ms: 86400000
+  openrouter:
+    api-key: ${OPENROUTER_API_KEY:sk-not-set}
+    base-url: https://openrouter.ai/api
+    model: openai/gpt-4o-mini
+  stt:
+    model: openai/whisper-1
+    fallback-model: openai/whisper-1
+    ffmpeg-path: ffmpeg
+    ffprobe-path: ffprobe
+    chunk-max-bytes: 15728640
+    chunk-seconds: 600
+  corpus:
+    chunk-size: 800
+    chunk-overlap: 120
+    top-k: 6
+
+logging:
+  level:
+    com.ailab: INFO

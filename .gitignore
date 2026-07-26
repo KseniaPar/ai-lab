@@ -1,0 +1,16 @@
+target/
+backend/target/
+backend/data/
+frontend/node_modules/
+frontend/dist/
+.idea/
+*.iml
+.DS_Store
+*.log
+*.err
+backend-run.*
+.env
+application-local.yml
+*.db
+uploads/
+.vscode/
