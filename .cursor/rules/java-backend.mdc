@@ -1,0 +1,62 @@
+---
+description: Java backend conventions for Knowbase Spring Boot API
+globs: backend/**/*.java
+alwaysApply: false
+---
+
+# Backend Java
+
+## Naming
+
+- Packages: `com.ailab.<feature>`
+- Classes: `CourseController`, `CourseService`, `ChunkRepository`
+- Nested request DTOs: `public record CreateCourseRequest(...)` inside the controller
+- Row DTOs: `public record CourseRow(...)` inside the repository
+- IDs: `String` UUID via `UUID.randomUUID().toString()`
+- Timestamps: ISO-8601 `Instant.now().toString()` stored as TEXT
+
+## Patterns (do this)
+
+1. Constructor injection, final fields, `@Service` / `@Repository` / `@RestController`
+2. Validate inputs in service; Russian messages (`"title обязателен"`)
+3. SQL only in repositories, parameterized (`?`), text blocks for multi-line SQL
+4. SQLite nullables: use `toLong(rs.getObject(...))` — never cast `Integer`→`Long` blindly
+5. Course AI routes live on `/api/courses/{courseId}/...` (see `CourseAiController`)
+
+## File template
+
+```java
+package com.ailab.feature;
+
+import org.springframework.stereotype.Service;
+import java.util.Map;
+
+@Service
+public class FeatureService {
+    private final FeatureRepository repo;
+    private final CourseService courses;
+
+    public FeatureService(FeatureRepository repo, CourseService courses) {
+        this.repo = repo;
+        this.courses = courses;
+    }
+
+    public Map<String, Object> doThing(String courseId, String input) {
+        courses.requireOwned(courseId);
+        if (input == null || input.isBlank()) {
+            throw new IllegalArgumentException("input обязателен");
+        }
+        // ...
+        return Map.of("status", "ok");
+    }
+}
+```
+
+## Antipatterns (forbidden)
+
+- ❌ Field/`@Autowired` injection
+- ❌ Raw concatenated SQL or SQL in controllers
+- ❌ Swallowing exceptions / empty catch
+- ❌ Returning entities with snake_case JSON keys
+- ❌ Skipping `requireOwned` on course-scoped endpoints
+- ❌ Committing `application-local.yml` or hardcoding API keys

@@ -1,0 +1,19 @@
+---
+description: Vite vanilla JS frontend conventions for Knowbase
+globs: frontend/**/*.{js,html,css}
+alwaysApply: false
+---
+
+# Frontend
+
+- Pages: `login.html`, `courses.html`, `course.html` + shared `js/api.js`, `css/app.css`
+- Auth: `requireAuth()` + `api()` from `/js/api.js` (Bearer JWT, JSON errors)
+- No frameworks; keep UI minimal cards matching existing CSS classes
+- Talk to API via Vite proxy (`/api` → `8081`); never hardcode OpenRouter keys in browser
+- Prefer `async` handlers with `try/catch` and `#err` / `#ok` messages like `course.html`
+
+## Antipatterns
+
+- ❌ `console.log` of tokens or PII left in UI code
+- ❌ Duplicating `fetch` auth headers instead of `api()`
+- ❌ Adding React/Vue/TS without an explicit request
