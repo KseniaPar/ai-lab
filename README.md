@@ -45,7 +45,7 @@ npm run dev
 | GET | `/api/courses/{id}/source-summary` |
 | GET | `/api/courses/{id}/source-summary/export` (JSON download) |
 | POST/GET | `/api/courses/{id}/conspect` |
-| GET | `/api/courses/{id}/conspect/export` (Markdown download) |
+| GET | `/api/courses/{id}/conspect/export` (Markdown download, `text/markdown; charset=UTF-8`) |
 | POST | `/api/courses/{id}/ask` |
 | GET | `/api/stats` | includes `hasAnyConspect` (boolean for current user) |
 

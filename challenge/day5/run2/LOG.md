@@ -8,3 +8,4 @@
 | R04 | research | PASS | 1 | docs/architecture.md concept-map out of scope / forbidden |
 | R05 | bug-fix | PASS | 9 | blank retrieve returns empty; CorpusServiceRetrieveTest |
 | R06 | bug-fix | PASS | 1 | courses.html clears #err after successful create |
+| R07 | research | PASS | 1 | README conspect/export text/markdown charset UTF-8 |
