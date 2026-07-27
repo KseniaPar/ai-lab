@@ -48,6 +48,13 @@ npm run dev
 | POST | `/api/courses/{id}/ask` |
 | GET | `/api/stats` | includes `hasAnyConspect` (boolean for current user) |
 
+## Auth
+
+- **Register / login:** `POST /api/auth/register` and `POST /api/auth/login` with JSON `{ "username", "password" }`. Response includes a JWT `token`.
+- **Bearer header:** send `Authorization: Bearer <token>` on protected API calls (the UI `api()` helper does this automatically).
+- **Public:** `/api/auth/**`, `GET /api/health`, and CORS `OPTIONS /**`.
+- **Protected:** all other `/api/**` routes require a valid JWT.
+
 ## Демо
 
 1. Зарегистрируйтесь в UI  
