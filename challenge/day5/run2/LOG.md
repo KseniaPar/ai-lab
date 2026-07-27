@@ -9,3 +9,4 @@
 | R05 | bug-fix | PASS | 9 | blank retrieve returns empty; CorpusServiceRetrieveTest |
 | R06 | bug-fix | PASS | 1 | courses.html clears #err after successful create |
 | R07 | research | PASS | 1 | README conspect/export text/markdown charset UTF-8 |
+| R08 | bug-fix | PASS | 10 | blank Bearer skips parse; JwtAuthFilterTest |

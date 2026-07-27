@@ -31,14 +31,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7).trim();
-            try {
-                Claims claims = jwtService.parse(token);
-                String userId = claims.getSubject();
-                UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(userId, null, List.of());
-                SecurityContextHolder.getContext().setAuthentication(auth);
-            } catch (Exception ignored) {
-                SecurityContextHolder.clearContext();
+            // Blank Bearer token: skip parse, continue filter chain (unauthenticated).
+            if (!token.isEmpty()) {
+                try {
+                    Claims claims = jwtService.parse(token);
+                    String userId = claims.getSubject();
+                    UsernamePasswordAuthenticationToken auth =
+                            new UsernamePasswordAuthenticationToken(userId, null, List.of());
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                } catch (Exception ignored) {
+                    SecurityContextHolder.clearContext();
+                }
             }
         }
         filterChain.doFilter(request, response);
