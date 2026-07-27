@@ -5,7 +5,6 @@ import com.ailab.corpus.CorpusService;
 import com.ailab.course.CourseService;
 import com.ailab.llm.LlmGateway;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -21,19 +20,19 @@ public class AskService {
     private final CourseService courses;
     private final CorpusService corpus;
     private final LlmGateway llm;
-    private final JdbcTemplate jdbc;
+    private final QaTurnRepository qaTurns;
     private final ObjectMapper objectMapper;
 
     public AskService(
             CourseService courses,
             CorpusService corpus,
             LlmGateway llm,
-            JdbcTemplate jdbc,
+            QaTurnRepository qaTurns,
             ObjectMapper objectMapper) {
         this.courses = courses;
         this.corpus = corpus;
         this.llm = llm;
-        this.jdbc = jdbc;
+        this.qaTurns = qaTurns;
         this.objectMapper = objectMapper;
     }
 
@@ -82,12 +81,9 @@ public class AskService {
         String id = UUID.randomUUID().toString();
         String createdAt = Instant.now().toString();
         try {
-            jdbc.update(
-                    """
-                    INSERT INTO qa_turns(id, course_id, question, answer, citations_json, created_at)
-                    VALUES (?,?,?,?,?,?)
-                    """,
-                    id, courseId, question.trim(), answer, objectMapper.writeValueAsString(citations), createdAt);
+            qaTurns.insert(new QaTurnRepository.QaTurnRow(
+                    id, courseId, question.trim(), answer,
+                    objectMapper.writeValueAsString(citations), createdAt));
         } catch (Exception e) {
             throw new IllegalStateException("Не удалось сохранить Q&A: " + e.getMessage(), e);
         }

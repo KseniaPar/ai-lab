@@ -5,8 +5,8 @@ import com.ailab.conspect.ConspectRepository;
 import com.ailab.corpus.ChunkRepository;
 import com.ailab.course.CourseRepository;
 import com.ailab.lecture.LectureRepository;
+import com.ailab.qa.QaTurnRepository;
 import com.ailab.stt.TranscriptionClient;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +22,7 @@ public class StatsController {
     private final LectureRepository lectures;
     private final ChunkRepository chunks;
     private final ConspectRepository conspects;
-    private final JdbcTemplate jdbc;
+    private final QaTurnRepository qaTurns;
     private final TranscriptionClient transcriptionClient;
 
     public StatsController(
@@ -30,13 +30,13 @@ public class StatsController {
             LectureRepository lectures,
             ChunkRepository chunks,
             ConspectRepository conspects,
-            JdbcTemplate jdbc,
+            QaTurnRepository qaTurns,
             TranscriptionClient transcriptionClient) {
         this.courses = courses;
         this.lectures = lectures;
         this.chunks = chunks;
         this.conspects = conspects;
-        this.jdbc = jdbc;
+        this.qaTurns = qaTurns;
         this.transcriptionClient = transcriptionClient;
     }
 
@@ -45,15 +45,7 @@ public class StatsController {
         String userId = AuthContext.requireUserId();
         String lastAsk = null;
         try {
-            lastAsk = jdbc.query(
-                    """
-                    SELECT q.created_at FROM qa_turns q
-                    JOIN courses c ON c.id = q.course_id
-                    WHERE c.user_id = ?
-                    ORDER BY q.created_at DESC LIMIT 1
-                    """,
-                    rs -> rs.next() ? rs.getString(1) : null,
-                    userId);
+            lastAsk = qaTurns.findLatestCreatedAtByUser(userId);
         } catch (Exception ignored) {
             // empty
         }
