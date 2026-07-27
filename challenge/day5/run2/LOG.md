@@ -7,3 +7,4 @@
 | R03 | bug-fix | PASS | 6 | AskRateLimiterTest N+1 throws Russian rate-limit message |
 | R04 | research | PASS | 1 | docs/architecture.md concept-map out of scope / forbidden |
 | R05 | bug-fix | PASS | 9 | blank retrieve returns empty; CorpusServiceRetrieveTest |
+| R06 | bug-fix | PASS | 1 | courses.html clears #err after successful create |

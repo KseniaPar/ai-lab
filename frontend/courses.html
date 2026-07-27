@@ -92,6 +92,7 @@
             subject: document.getElementById('subject').value,
           }),
         });
+        err.textContent = '';
         document.getElementById('title').value = '';
         document.getElementById('subject').value = '';
         await refresh();
