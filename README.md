@@ -34,6 +34,7 @@ npm run dev
 
 | Method | Path |
 |--------|------|
+| GET | `/api/health` |
 | POST | `/api/auth/register`, `/api/auth/login` |
 | CRUD | `/api/courses` |
 | POST | `/api/courses/{id}/lectures` (multipart audio → STT) |
