@@ -23,4 +23,10 @@ class ChunkerTest {
         Chunker chunker = new Chunker(800, 120);
         assertTrue(chunker.chunkPlain("").isEmpty());
     }
+
+    @Test
+    void whitespaceOnlyReturnsEmpty() {
+        Chunker chunker = new Chunker(800, 120);
+        assertTrue(chunker.chunkPlain("   \n\t  ").isEmpty());
+    }
 }
