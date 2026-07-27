@@ -46,7 +46,7 @@ npm run dev
 | POST/GET | `/api/courses/{id}/conspect` |
 | GET | `/api/courses/{id}/conspect/export` (Markdown download) |
 | POST | `/api/courses/{id}/ask` |
-| GET | `/api/stats` |
+| GET | `/api/stats` | includes `hasAnyConspect` (boolean for current user) |
 
 ## Демо
 

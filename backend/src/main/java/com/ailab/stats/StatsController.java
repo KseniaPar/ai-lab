@@ -1,6 +1,7 @@
 package com.ailab.stats;
 
 import com.ailab.auth.AuthContext;
+import com.ailab.conspect.ConspectRepository;
 import com.ailab.corpus.ChunkRepository;
 import com.ailab.course.CourseRepository;
 import com.ailab.lecture.LectureRepository;
@@ -20,6 +21,7 @@ public class StatsController {
     private final CourseRepository courses;
     private final LectureRepository lectures;
     private final ChunkRepository chunks;
+    private final ConspectRepository conspects;
     private final JdbcTemplate jdbc;
     private final TranscriptionClient transcriptionClient;
 
@@ -27,11 +29,13 @@ public class StatsController {
             CourseRepository courses,
             LectureRepository lectures,
             ChunkRepository chunks,
+            ConspectRepository conspects,
             JdbcTemplate jdbc,
             TranscriptionClient transcriptionClient) {
         this.courses = courses;
         this.lectures = lectures;
         this.chunks = chunks;
+        this.conspects = conspects;
         this.jdbc = jdbc;
         this.transcriptionClient = transcriptionClient;
     }
@@ -57,6 +61,7 @@ public class StatsController {
         result.put("courseCount", courses.countByUser(userId));
         result.put("lectureCount", lectures.countByUserCourses(userId));
         result.put("chunkCount", chunks.countByUser(userId));
+        result.put("hasAnyConspect", conspects.existsByUser(userId));
         result.put("lastAskAt", lastAsk == null ? "" : lastAsk);
         result.put("stt", transcriptionClient.status());
         return result;
