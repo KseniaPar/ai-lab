@@ -43,6 +43,16 @@ public class CourseAiController {
         return sourceSummaryService.sourceSummary(courseId);
     }
 
+    @GetMapping("/source-summary/export")
+    public ResponseEntity<Map<String, Object>> exportSourceSummary(@PathVariable String courseId) {
+        Map<String, Object> payload = sourceSummaryService.sourceSummary(courseId);
+        String filename = "source-summary-" + courseId + ".json";
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(payload);
+    }
+
     @PostMapping("/conspect")
     public Map<String, Object> generateConspect(@PathVariable String courseId) {
         return conspectService.generate(courseId);
