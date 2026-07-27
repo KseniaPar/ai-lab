@@ -3,6 +3,7 @@ package com.ailab.qa;
 import com.ailab.corpus.ChunkRepository;
 import com.ailab.corpus.CorpusService;
 import com.ailab.course.CourseService;
+import com.ailab.auth.AuthContext;
 import com.ailab.llm.LlmGateway;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class AskService {
     private final CorpusService corpus;
     private final LlmGateway llm;
     private final QaTurnRepository qaTurns;
+    private final AskRateLimiter rateLimiter;
     private final ObjectMapper objectMapper;
 
     public AskService(
@@ -28,16 +30,19 @@ public class AskService {
             CorpusService corpus,
             LlmGateway llm,
             QaTurnRepository qaTurns,
+            AskRateLimiter rateLimiter,
             ObjectMapper objectMapper) {
         this.courses = courses;
         this.corpus = corpus;
         this.llm = llm;
         this.qaTurns = qaTurns;
+        this.rateLimiter = rateLimiter;
         this.objectMapper = objectMapper;
     }
 
     public Map<String, Object> ask(String courseId, String question) {
         courses.requireOwned(courseId);
+        rateLimiter.check(AuthContext.requireUserId());
         if (question == null || question.isBlank()) {
             throw new IllegalArgumentException("question обязателен");
         }
