@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "tracker": "tasks/backlog.json",
+  "tasks": [
+    {
+      "id": "T01",
+      "title": "Health endpoint",
+      "type": "feature",
+      "profile": "feature-builder",
+      "done_when": "GET /api/health returns 200 JSON {\"status\":\"ok\"} without auth; README API table updated; mvn -q -DskipTests compile succeeds"
+    },
+    {
+      "id": "T02",
+      "title": "Chunker whitespace-only returns empty",
+      "type": "test",
+      "profile": "bug-fix",
+      "done_when": "ChunkerTest has a test that chunkPlain(\"   \\n\\t  \") is empty; mvn -q -Dtest=ChunkerTest test passes"
+    },
+    {
+      "id": "T03",
+      "title": "Extract CitationTimestamps helper",
+      "type": "refactor",
+      "profile": "feature-builder",
+      "done_when": "AskService.formatTimestamp delegates to com.ailab.qa.CitationTimestamps.format(Long); CitationTimestampTest still passes"
+    },
+    {
+      "id": "T04",
+      "title": "Docs: architecture overview",
+      "type": "docs",
+      "profile": "research",
+      "done_when": "File docs/architecture.md exists with stack, packages, ownership rule, and main flow; no code changes required beyond the doc"
+    },
+    {
+      "id": "T05",
+      "title": "CourseService.requireOwned unit test",
+      "type": "test",
+      "profile": "bug-fix",
+      "done_when": "CourseServiceTest covers not-found and wrong-owner (SecurityException); mvn -q -Dtest=CourseServiceTest test passes"
+    },
+    {
+      "id": "T06",
+      "title": "GET source-summary endpoint",
+      "type": "feature",
+      "profile": "feature-builder",
+      "done_when": "GET /api/courses/{id}/source-summary returns course, sources[], audioCount, materialCount, readyCount; ownership enforced; dedicated service; README updated; compiles"
+    },
+    {
+      "id": "T07",
+      "title": "Frontend: empty course title validation",
+      "type": "bug",
+      "profile": "bug-fix",
+      "done_when": "courses.html shows error and does not call API when title is blank; no backend change required"
+    },
+    {
+      "id": "T08",
+      "title": "Chunker.chunkSegments unit test",
+      "type": "test",
+      "profile": "bug-fix",
+      "done_when": "ChunkerTest covers chunkSegments with 2+ short segments merging by size; mvn -q -Dtest=ChunkerTest test passes"
+    },
+    {
+      "id": "T09",
+      "title": "ConspectRepository.existsByCourse uses EXISTS",
+      "type": "refactor",
+      "profile": "feature-builder",
+      "done_when": "existsByCourse SQL uses SELECT 1 ... LIMIT 1 (not COUNT(*)); compiles"
+    },
+    {
+      "id": "T10",
+      "title": "Stats include hasAnyConspect",
+      "type": "feature",
+      "profile": "feature-builder",
+      "done_when": "GET /api/stats includes boolean hasAnyConspect for current user; compiles; README notes the field"
+    },
+    {
+      "id": "T11",
+      "title": "Docs: API auth section in README",
+      "type": "docs",
+      "profile": "research",
+      "done_when": "README has a short Auth section: register/login, Bearer header, public vs protected paths"
+    },
+    {
+      "id": "T12",
+      "title": "QaTurnRepository extract",
+      "type": "refactor",
+      "profile": "feature-builder",
+      "done_when": "AskService persists via QaTurnRepository (no raw JdbcTemplate in AskService); dual-access avoided; compiles"
+    },
+    {
+      "id": "T13",
+      "title": "Course page shows outline counts",
+      "type": "feature",
+      "profile": "feature-builder",
+      "done_when": "course.html loads GET outline (or source-summary) and shows materialsCount/chunksCount/hasConspect in muted text; uses api()"
+    },
+    {
+      "id": "T14",
+      "title": "Illegal empty ask question message",
+      "type": "bug",
+      "profile": "bug-fix",
+      "done_when": "Blank ask still returns Russian error containing 'question'; unit or manual assertion via AskService validation path; existing tests still pass"
+    },
+    {
+      "id": "T15",
+      "title": "JwtServiceTest covers expired token rejection",
+      "type": "test",
+      "profile": "bug-fix",
+      "done_when": "JwtServiceTest has expired-token case (constructor with negative/short ttl or forged past exp); mvn -q -Dtest=JwtServiceTest test passes"
+    },
+    {
+      "id": "T16",
+      "title": "Simple in-memory ask rate limit",
+      "type": "feature",
+      "profile": "feature-builder",
+      "done_when": "More than N asks/minute per user returns IllegalStateException with Russian message; N configurable via app.ask.rate-limit-per-minute default 30; compiles"
+    },
+    {
+      "id": "T17",
+      "title": "docs/testing.md Day3 summary",
+      "type": "docs",
+      "profile": "research",
+      "done_when": "docs/testing.md describes Level1 mvn test and Level2 smoke path with links to challenge/day3"
+    },
+    {
+      "id": "T18",
+      "title": "Lecture list omits rawText in course lectures API response if oversized",
+      "type": "bug",
+      "profile": "bug-fix",
+      "done_when": "Lecture list/map for course truncates or omits rawText longer than 500 chars in list endpoint payload (preview only); compiles"
+    }
+  ]
+}
