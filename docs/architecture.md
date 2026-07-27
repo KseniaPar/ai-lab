@@ -50,4 +50,6 @@ flowchart LR
 5. **Conspect** — LLM summary from corpus; optional Markdown export
 6. **Ask** — question over chunks → answer + timestamped citations
 
-No concept-map or video pipeline.
+## Out of scope (forbidden)
+
+**Concept-map** features (endpoints, tables, UI) are **out of scope and forbidden** — do not implement a concept map or video pipeline.
