@@ -27,7 +27,12 @@ alwaysApply: false
 8. Boolean existence: `SELECT 1 ... LIMIT 1` / exists helper — not `COUNT(*) > 0` unless you need the count
 9. Multi-field JSON: `LinkedHashMap` for stable key order; nested maps camelCase
 10. User-facing routes: add a row to `README.md` API table
-11. `SecurityException` must map to **403** in `ApiExceptionHandler` (`{ "error": "..." }`)
+## Patterns (do this) — Day5 loop lessons
+
+12. When a backlog task says "already satisfied", still leave a short note under `challenge/day5/` and mark PASS — do not re-implement.
+13. Prefer `com.ailab.<feature>` packages that already exist; never invent `com.ailab.knowbase` / `dto` / JPA entity layers.
+14. After each backlog task: targeted verify → commit `day5: Txx …` → append LOG → next task. Do not batch unrelated commits.
+15. Execution-loop profile: stop the streak on first failed `done_when` / failed tests.
 
 ## File template
 

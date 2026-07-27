@@ -1,0 +1,62 @@
+{
+  "version": 2,
+  "note": "Harder stretch pool for run2 after Day5 rule tweaks",
+  "tasks": [
+    {
+      "id": "R01",
+      "title": "Health endpoint MockMvc smoke test",
+      "type": "test",
+      "profile": "bug-fix",
+      "done_when": "Spring Boot test (MockMvc or WebTestClient) asserts GET /api/health is 200 and body contains status ok without auth; mvn -q -Dtest=*Health* test passes"
+    },
+    {
+      "id": "R02",
+      "title": "Export source-summary JSON download",
+      "type": "feature",
+      "profile": "feature-builder",
+      "done_when": "GET /api/courses/{id}/source-summary/export returns application/json attachment with same payload as source-summary; ownership enforced; README row; compiles"
+    },
+    {
+      "id": "R03",
+      "title": "AskRateLimiter unit test window",
+      "type": "test",
+      "profile": "bug-fix",
+      "done_when": "AskRateLimiterTest proves N+1th call in window throws IllegalStateException with Russian text; mvn -q -Dtest=AskRateLimiterTest test passes"
+    },
+    {
+      "id": "R04",
+      "title": "Refuse concept-map in docs",
+      "type": "docs",
+      "profile": "research",
+      "done_when": "docs/architecture.md explicitly states concept-map is out of scope / forbidden"
+    },
+    {
+      "id": "R05",
+      "title": "CorpusService retrieve empty query",
+      "type": "bug",
+      "profile": "bug-fix",
+      "done_when": "Blank/whitespace retrieve returns empty list without exception; unit test or CorpusService guard; compiles + test if added"
+    },
+    {
+      "id": "R06",
+      "title": "courses.html create clears error on success",
+      "type": "bug",
+      "profile": "bug-fix",
+      "done_when": "After successful create, #err is cleared; code change in courses.html"
+    },
+    {
+      "id": "R07",
+      "title": "Conspect export Content-Type charset documented",
+      "type": "docs",
+      "profile": "research",
+      "done_when": "README conspect/export row mentions text/markdown charset UTF-8"
+    },
+    {
+      "id": "R08",
+      "title": "JwtAuthFilter ignores blank Bearer token",
+      "type": "bug",
+      "profile": "bug-fix",
+      "done_when": "Authorization 'Bearer ' (empty token) does not throw; filter continues; small unit test or documented guard in filter; compiles"
+    }
+  ]
+}
