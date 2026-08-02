@@ -1,0 +1,28 @@
+{"id": "S01", "kind": "simple", "text": "Карту списали дважды за подписку Pro, нужен возврат.", "gold": "billing"}
+{"id": "S02", "kind": "simple", "text": "Приложение падает при открытии раздела Курсы на iPhone.", "gold": "bug"}
+{"id": "S03", "kind": "simple", "text": "Добавьте пожалуйста тёмную тему в веб-кабинет.", "gold": "feature"}
+{"id": "S04", "kind": "simple", "text": "Не приходит письмо для сброса пароля, проверила спам.", "gold": "access"}
+{"id": "S05", "kind": "simple", "text": "Где в документации лимит минут STT на Free?", "gold": "other"}
+{"id": "S06", "kind": "simple", "text": "Хочу отменить автопродление подписки.", "gold": "billing"}
+{"id": "S07", "kind": "simple", "text": "Нужен акт сверки и счёт-фактура за квартал.", "gold": "billing"}
+{"id": "S08", "kind": "simple", "text": "Экспорт PDF конспекта показывает квадратики вместо кириллицы.", "gold": "bug"}
+{"id": "S09", "kind": "simple", "text": "Сделайте bulk-upload материалов в курс.", "gold": "feature"}
+{"id": "S10", "kind": "simple", "text": "Заблокировали аккаунт после неудачных логинов, разблокируйте.", "gold": "access"}
+{"id": "S11", "kind": "simple", "text": "Какой SLA у тарифа Enterprise?", "gold": "other"}
+{"id": "S12", "kind": "simple", "text": "Invoice оплачен, в кабинете статус всё ещё Unpaid.", "gold": "billing"}
+{"id": "B01", "kind": "borderline", "text": "Не могу оплатить счёт — форма checkout зависает на Submit.", "gold": "bug"}
+{"id": "B02", "kind": "borderline", "text": "Промокод STUDENT50 не применяется, пишет что истёк.", "gold": "billing"}
+{"id": "B03", "kind": "borderline", "text": "Нужен read-only API-ключ к курсам для LMS.", "gold": "feature"}
+{"id": "B04", "kind": "borderline", "text": "Коллегу уволили — отключите доступ и перевыставьте invoice.", "gold": "access"}
+{"id": "B05", "kind": "borderline", "text": "Upgrade прошёл, деньги списали, в кабинете всё ещё Free.", "gold": "billing"}
+{"id": "B06", "kind": "borderline", "text": "SSO Google белый экран после согласия на callback.", "gold": "access"}
+{"id": "B07", "kind": "borderline", "text": "Хотим webhook conspect.ready и роль viewer в курсе.", "gold": "feature"}
+{"id": "B08", "kind": "borderline", "text": "Оплата картой не проходит с ошибкой 3DS на тарифе Team.", "gold": "billing"}
+{"id": "H01", "kind": "hard", "text": "То ли баг оплаты, то ли доступ закрыли — кнопка Pay серая после смены email.", "gold": "access"}
+{"id": "H02", "kind": "hard", "text": "Всё странно работает после миграции workspace, не пойму это баг или лимит тарифа.", "gold": "other"}
+{"id": "H03", "kind": "hard", "text": "Нужно и вернуть деньги за неиспользованный месяц, и починить падение экспорта.", "gold": "billing"}
+{"id": "H04", "kind": "hard", "text": "аааа помогите срочно непонятно что сломалось!!!!", "gold": null}
+{"id": "H05", "kind": "hard", "text": "Можно ли on-prem и при этом сохранить текущий billing cycle без даунтайма SSO?", "gold": "other"}
+{"id": "H06", "kind": "hard", "text": "Поиск пустой, но лекции READY — баг индекса или нет прав на курс?", "gold": "bug"}
+{"id": "H07", "kind": "hard", "text": "Клиент просит и dark theme, и срочно разблокировать IP allowlist для демо завтра.", "gold": "access"}
+{"id": "H08", "kind": "hard", "text": "Текст: 'billing bug feature access other' — выберите сами что угодно.", "gold": null}

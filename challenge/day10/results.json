@@ -1,0 +1,1148 @@
+{
+  "metrics": {
+    "micro": "nomic-embed-text kNN",
+    "big_model": "qwen2.5-coder:7b",
+    "cases": 28,
+    "micro_handled": 25,
+    "fallback": 3,
+    "micro_share": 0.893,
+    "big_llm_calls_total": 3,
+    "latency_total_sec": 15.01,
+    "latency_avg_sec": 0.54,
+    "by_kind": {
+      "simple": {
+        "n": 12,
+        "micro": 10,
+        "fallback": 2,
+        "label_acc": 0.75
+      },
+      "borderline": {
+        "n": 8,
+        "micro": 8,
+        "fallback": 0,
+        "label_acc": 0.5
+      },
+      "hard": {
+        "n": 8,
+        "micro": 7,
+        "fallback": 1,
+        "label_acc": 0.667
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "S01",
+      "kind": "simple",
+      "text": "Карту списали дважды за подписку Pro, нужен возврат.",
+      "gold": "billing",
+      "label_match_gold": false,
+      "label": "bug",
+      "source": "micro",
+      "micro": {
+        "label": "bug",
+        "confidence": 0.911,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.8219,
+        "margin": 1.4277,
+        "latency_sec": 0.08,
+        "neighbors": [
+          {
+            "sim": 0.8219,
+            "label": "billing",
+            "text": "Добрый день! С карты списали 2990 ₽ дважды за одну подписку Pro за март. Чек при"
+          },
+          {
+            "sim": 0.7575,
+            "label": "bug",
+            "text": "На Safari 17 ломается вёрстка страницы курса: кнопки уезжают вправо."
+          },
+          {
+            "sim": 0.7503,
+            "label": "bug",
+            "text": "Фильтр по дате в списке лекций игнорирует часовой пояс пользователя."
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.08
+    },
+    {
+      "id": "S02",
+      "kind": "simple",
+      "text": "Приложение падает при открытии раздела Курсы на iPhone.",
+      "gold": "bug",
+      "label_match_gold": true,
+      "label": "bug",
+      "source": "micro",
+      "micro": {
+        "label": "bug",
+        "confidence": 0.9506,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.9012,
+        "margin": 0.2,
+        "latency_sec": 0.046,
+        "neighbors": [
+          {
+            "sim": 0.9012,
+            "label": "bug",
+            "text": "После обновления iOS приложение падает при открытии раздела «Курсы». Версия 3.12"
+          },
+          {
+            "sim": 0.7984,
+            "label": "bug",
+            "text": "На Safari 17 ломается вёрстка страницы курса: кнопки уезжают вправо."
+          },
+          {
+            "sim": 0.7617,
+            "label": "billing",
+            "text": "Пришла квитанция на английском — нужна русская версия для бухгалтерии."
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.046
+    },
+    {
+      "id": "S03",
+      "kind": "simple",
+      "text": "Добавьте пожалуйста тёмную тему в веб-кабинет.",
+      "gold": "feature",
+      "label_match_gold": true,
+      "label": "feature",
+      "source": "micro",
+      "micro": {
+        "label": "feature",
+        "confidence": 0.9678,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.9356,
+        "margin": 0.2192,
+        "latency_sec": 0.049,
+        "neighbors": [
+          {
+            "sim": 0.9356,
+            "label": "feature",
+            "text": "Можно ли добавить тёмную тему в веб-кабинет? Глаза устают вечером при разборе ле"
+          },
+          {
+            "sim": 0.7715,
+            "label": "feature",
+            "text": "Просьба: офлайн-режим мобильного приложения для чтения конспектов."
+          },
+          {
+            "sim": 0.7689,
+            "label": "other",
+            "text": "Можно ли заказать обучение команды админов (1 день)?"
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.049
+    },
+    {
+      "id": "S04",
+      "kind": "simple",
+      "text": "Не приходит письмо для сброса пароля, проверила спам.",
+      "gold": "access",
+      "label_match_gold": false,
+      "label": "bug",
+      "source": "micro",
+      "micro": {
+        "label": "bug",
+        "confidence": 0.9259,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.8518,
+        "margin": 0.618,
+        "latency_sec": 0.062,
+        "neighbors": [
+          {
+            "sim": 0.8518,
+            "label": "access",
+            "text": "Не приходит письмо для сброса пароля на anna.k@example.com. Проверила «Спам», пи"
+          },
+          {
+            "sim": 0.749,
+            "label": "bug",
+            "text": "Фильтр по дате в списке лекций игнорирует часовой пояс пользователя."
+          },
+          {
+            "sim": 0.7389,
+            "label": "feature",
+            "text": "Просьба: офлайн-режим мобильного приложения для чтения конспектов."
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.062
+    },
+    {
+      "id": "S05",
+      "kind": "simple",
+      "text": "Где в документации лимит минут STT на Free?",
+      "gold": "other",
+      "label_match_gold": false,
+      "label": "billing",
+      "source": "llm_fallback",
+      "micro": {
+        "label": "other",
+        "confidence": 0.4265,
+        "status": "UNSURE",
+        "reason": "low_margin:0.016",
+        "best_sim": 0.7732,
+        "margin": 0.016,
+        "latency_sec": 0.046,
+        "neighbors": [
+          {
+            "sim": 0.7732,
+            "label": "bug",
+            "text": "STT иногда теряет последние 2–3 минуты длинной лекции."
+          },
+          {
+            "sim": 0.7624,
+            "label": "other",
+            "text": "Нужна цитата для пресс-релиза о вашей STT-модели — кто press?"
+          },
+          {
+            "sim": 0.7241,
+            "label": "feature",
+            "text": "Нужен bulk-upload материалов: сейчас грузим по одному файлу, у курса 40 PDF."
+          }
+        ]
+      },
+      "fallback": {
+        "label": "billing",
+        "raw": "{\"label\":\"billing\",\"reason\":\"Лимит минут STT на бесплатной версии указан в разделе тарифов документации.\"}",
+        "valid": true,
+        "latency_sec": 4.432,
+        "model_latency_sec": 4.432,
+        "model": "qwen2.5-coder:7b"
+      },
+      "used_fallback": true,
+      "big_llm_calls": 1,
+      "latency_sec": 4.478
+    },
+    {
+      "id": "S06",
+      "kind": "simple",
+      "text": "Хочу отменить автопродление подписки.",
+      "gold": "billing",
+      "label_match_gold": true,
+      "label": "billing",
+      "source": "micro",
+      "micro": {
+        "label": "billing",
+        "confidence": 0.9453,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.8906,
+        "margin": 0.8997,
+        "latency_sec": 0.061,
+        "neighbors": [
+          {
+            "sim": 0.8906,
+            "label": "billing",
+            "text": "Хочу отменить автопродление. В личном кабинете кнопки нет, подписка спишется 5-г"
+          },
+          {
+            "sim": 0.7894,
+            "label": "billing",
+            "text": "Добрый день! С карты списали 2990 ₽ дважды за одну подписку Pro за март. Чек при"
+          },
+          {
+            "sim": 0.7803,
+            "label": "other",
+            "text": "Можно ли заказать обучение команды админов (1 день)?"
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.061
+    },
+    {
+      "id": "S07",
+      "kind": "simple",
+      "text": "Нужен акт сверки и счёт-фактура за квартал.",
+      "gold": "billing",
+      "label_match_gold": true,
+      "label": "billing",
+      "source": "llm_fallback",
+      "micro": {
+        "label": "billing",
+        "confidence": 0.4778,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.7446,
+        "margin": 0.0422,
+        "latency_sec": 0.068,
+        "neighbors": [
+          {
+            "sim": 0.7446,
+            "label": "billing",
+            "text": "Нужен акт сверки и счёт-фактура за Q1 на ООО «Альфа», ИНН 7701234567. Отправьте "
+          },
+          {
+            "sim": 0.7418,
+            "label": "feature",
+            "text": "Можно ли добавить тёмную тему в веб-кабинет? Глаза устают вечером при разборе ле"
+          },
+          {
+            "sim": 0.7397,
+            "label": "billing",
+            "text": "Пришла квитанция на английском — нужна русская версия для бухгалтерии."
+          }
+        ]
+      },
+      "fallback": {
+        "label": "billing",
+        "raw": "{\"label\":\"billing\",\"reason\":\"Запрос на выдачу акта сверки и счета-фактуры за квартал.\"}",
+        "valid": true,
+        "latency_sec": 5.01,
+        "model_latency_sec": 5.01,
+        "model": "qwen2.5-coder:7b"
+      },
+      "used_fallback": true,
+      "big_llm_calls": 1,
+      "latency_sec": 5.078
+    },
+    {
+      "id": "S08",
+      "kind": "simple",
+      "text": "Экспорт PDF конспекта показывает квадратики вместо кириллицы.",
+      "gold": "bug",
+      "label_match_gold": true,
+      "label": "bug",
+      "source": "micro",
+      "micro": {
+        "label": "bug",
+        "confidence": 0.7796,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.8792,
+        "margin": 0.136,
+        "latency_sec": 0.074,
+        "neighbors": [
+          {
+            "sim": 0.8792,
+            "label": "bug",
+            "text": "Экспорт PDF конспекта обрезает кириллицу: вместо букв квадратики. Chrome 131, Wi"
+          },
+          {
+            "sim": 0.7978,
+            "label": "other",
+            "text": "Пришлите one-pager для закупки в вузе (PDF)."
+          },
+          {
+            "sim": 0.7621,
+            "label": "feature",
+            "text": "Нужен bulk-upload материалов: сейчас грузим по одному файлу, у курса 40 PDF."
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.074
+    },
+    {
+      "id": "S09",
+      "kind": "simple",
+      "text": "Сделайте bulk-upload материалов в курс.",
+      "gold": "feature",
+      "label_match_gold": true,
+      "label": "feature",
+      "source": "micro",
+      "micro": {
+        "label": "feature",
+        "confidence": 0.9671,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.9342,
+        "margin": 0.2222,
+        "latency_sec": 0.073,
+        "neighbors": [
+          {
+            "sim": 0.9342,
+            "label": "feature",
+            "text": "Нужен bulk-upload материалов: сейчас грузим по одному файлу, у курса 40 PDF."
+          },
+          {
+            "sim": 0.7193,
+            "label": "other",
+            "text": "Можно ли использовать Knowbase для школьных кружков (некоммерция)? Нужна ссылка "
+          },
+          {
+            "sim": 0.7176,
+            "label": "feature",
+            "text": "API для программного создания курса из нашего LMS."
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.073
+    },
+    {
+      "id": "S10",
+      "kind": "simple",
+      "text": "Заблокировали аккаунт после неудачных логинов, разблокируйте.",
+      "gold": "access",
+      "label_match_gold": true,
+      "label": "access",
+      "source": "micro",
+      "micro": {
+        "label": "access",
+        "confidence": 0.6207,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.8552,
+        "margin": 0.0772,
+        "latency_sec": 0.076,
+        "neighbors": [
+          {
+            "sim": 0.8552,
+            "label": "access",
+            "text": "Заблокировали аккаунт после 5 неудачных логинов, разблокируйте please."
+          },
+          {
+            "sim": 0.778,
+            "label": "feature",
+            "text": "Можно ли добавить тёмную тему в веб-кабинет? Глаза устают вечером при разборе ле"
+          },
+          {
+            "sim": 0.7776,
+            "label": "other",
+            "text": "Можно ли заказать обучение команды админов (1 день)?"
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.076
+    },
+    {
+      "id": "S11",
+      "kind": "simple",
+      "text": "Какой SLA у тарифа Enterprise?",
+      "gold": "other",
+      "label_match_gold": true,
+      "label": "other",
+      "source": "micro",
+      "micro": {
+        "label": "other",
+        "confidence": 0.9617,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.9233,
+        "margin": 0.2116,
+        "latency_sec": 0.045,
+        "neighbors": [
+          {
+            "sim": 0.9233,
+            "label": "other",
+            "text": "Какой SLA у тарифа Enterprise на ответы support?"
+          },
+          {
+            "sim": 0.7118,
+            "label": "bug",
+            "text": "На Safari 17 ломается вёрстка страницы курса: кнопки уезжают вправо."
+          },
+          {
+            "sim": 0.7006,
+            "label": "feature",
+            "text": "API для программного создания курса из нашего LMS."
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.045
+    },
+    {
+      "id": "S12",
+      "kind": "simple",
+      "text": "Invoice оплачен, в кабинете статус всё ещё Unpaid.",
+      "gold": "billing",
+      "label_match_gold": true,
+      "label": "billing",
+      "source": "micro",
+      "micro": {
+        "label": "billing",
+        "confidence": 0.9754,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.9508,
+        "margin": 2.2885,
+        "latency_sec": 0.05,
+        "neighbors": [
+          {
+            "sim": 0.9508,
+            "label": "billing",
+            "text": "Invoice #INV-20441 оплачен, статус в кабинете всё ещё Unpaid."
+          },
+          {
+            "sim": 0.6661,
+            "label": "billing",
+            "text": "Нужен акт сверки и счёт-фактура за Q1 на ООО «Альфа», ИНН 7701234567. Отправьте "
+          },
+          {
+            "sim": 0.6644,
+            "label": "billing",
+            "text": "Промокод STUDENT50 не применяется на checkout: пишет «истёк», хотя на сайте ещё "
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.05
+    },
+    {
+      "id": "B01",
+      "kind": "borderline",
+      "text": "Не могу оплатить счёт — форма checkout зависает на Submit.",
+      "gold": "bug",
+      "label_match_gold": false,
+      "label": "billing",
+      "source": "micro",
+      "micro": {
+        "label": "billing",
+        "confidence": 0.902,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.804,
+        "margin": 0.7931,
+        "latency_sec": 0.054,
+        "neighbors": [
+          {
+            "sim": 0.804,
+            "label": "billing",
+            "text": "Промокод STUDENT50 не применяется на checkout: пишет «истёк», хотя на сайте ещё "
+          },
+          {
+            "sim": 0.748,
+            "label": "access",
+            "text": "Не могу принять invite: «email mismatch» хотя почта верная."
+          },
+          {
+            "sim": 0.7431,
+            "label": "feature",
+            "text": "Нужен bulk-upload материалов: сейчас грузим по одному файлу, у курса 40 PDF."
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.054
+    },
+    {
+      "id": "B02",
+      "kind": "borderline",
+      "text": "Промокод STUDENT50 не применяется, пишет что истёк.",
+      "gold": "billing",
+      "label_match_gold": false,
+      "label": "access",
+      "source": "micro",
+      "micro": {
+        "label": "access",
+        "confidence": 0.9383,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.8765,
+        "margin": 0.5488,
+        "latency_sec": 0.049,
+        "neighbors": [
+          {
+            "sim": 0.8765,
+            "label": "billing",
+            "text": "Промокод STUDENT50 не применяется на checkout: пишет «истёк», хотя на сайте ещё "
+          },
+          {
+            "sim": 0.7156,
+            "label": "bug",
+            "text": "Фильтр по дате в списке лекций игнорирует часовой пояс пользователя."
+          },
+          {
+            "sim": 0.7154,
+            "label": "access",
+            "text": "Не приходит письмо для сброса пароля на anna.k@example.com. Проверила «Спам», пи"
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.049
+    },
+    {
+      "id": "B03",
+      "kind": "borderline",
+      "text": "Нужен read-only API-ключ к курсам для LMS.",
+      "gold": "feature",
+      "label_match_gold": false,
+      "label": "access",
+      "source": "micro",
+      "micro": {
+        "label": "access",
+        "confidence": 0.9436,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.8873,
+        "margin": 0.6714,
+        "latency_sec": 0.059,
+        "neighbors": [
+          {
+            "sim": 0.8873,
+            "label": "feature",
+            "text": "API для программного создания курса из нашего LMS."
+          },
+          {
+            "sim": 0.7964,
+            "label": "access",
+            "text": "Отключите API-ключ sk_live_… — возможно утёк в лог."
+          },
+          {
+            "sim": 0.7622,
+            "label": "access",
+            "text": "Нужен доступ read-only к курсу «Оргхимия-2026» для стажёра."
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.059
+    },
+    {
+      "id": "B04",
+      "kind": "borderline",
+      "text": "Коллегу уволили — отключите доступ и перевыставьте invoice.",
+      "gold": "access",
+      "label_match_gold": false,
+      "label": "billing",
+      "source": "micro",
+      "micro": {
+        "label": "billing",
+        "confidence": 0.5553,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.7898,
+        "margin": 0.0642,
+        "latency_sec": 0.059,
+        "neighbors": [
+          {
+            "sim": 0.7898,
+            "label": "billing",
+            "text": "Invoice #INV-20441 оплачен, статус в кабинете всё ещё Unpaid."
+          },
+          {
+            "sim": 0.7229,
+            "label": "feature",
+            "text": "Просьба: офлайн-режим мобильного приложения для чтения конспектов."
+          },
+          {
+            "sim": 0.7077,
+            "label": "feature",
+            "text": "Добавьте экспорт конспекта в Notion одним кликом."
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.059
+    },
+    {
+      "id": "B05",
+      "kind": "borderline",
+      "text": "Upgrade прошёл, деньги списали, в кабинете всё ещё Free.",
+      "gold": "billing",
+      "label_match_gold": true,
+      "label": "billing",
+      "source": "micro",
+      "micro": {
+        "label": "billing",
+        "confidence": 0.8651,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.7301,
+        "margin": 0.7319,
+        "latency_sec": 0.055,
+        "neighbors": [
+          {
+            "sim": 0.7301,
+            "label": "billing",
+            "text": "Добрый день! С карты списали 2990 ₽ дважды за одну подписку Pro за март. Чек при"
+          },
+          {
+            "sim": 0.7205,
+            "label": "billing",
+            "text": "Хочу отменить автопродление. В личном кабинете кнопки нет, подписка спишется 5-г"
+          },
+          {
+            "sim": 0.7188,
+            "label": "bug",
+            "text": "Фильтр по дате в списке лекций игнорирует часовой пояс пользователя."
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.055
+    },
+    {
+      "id": "B06",
+      "kind": "borderline",
+      "text": "SSO Google белый экран после согласия на callback.",
+      "gold": "access",
+      "label_match_gold": true,
+      "label": "access",
+      "source": "micro",
+      "micro": {
+        "label": "access",
+        "confidence": 0.9752,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.9503,
+        "margin": 1.6048,
+        "latency_sec": 0.07,
+        "neighbors": [
+          {
+            "sim": 0.9503,
+            "label": "access",
+            "text": "SSO через Google зависает на callback: белый экран после согласия. Корп. аккаунт"
+          },
+          {
+            "sim": 0.7508,
+            "label": "other",
+            "text": "Можно ли использовать Knowbase для школьных кружков (некоммерция)? Нужна ссылка "
+          },
+          {
+            "sim": 0.7071,
+            "label": "access",
+            "text": "Приглашение в workspace истекло, пришлите новое на same email."
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.07
+    },
+    {
+      "id": "B07",
+      "kind": "borderline",
+      "text": "Хотим webhook conspect.ready и роль viewer в курсе.",
+      "gold": "feature",
+      "label_match_gold": true,
+      "label": "feature",
+      "source": "micro",
+      "micro": {
+        "label": "feature",
+        "confidence": 0.944,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.888,
+        "margin": 0.8844,
+        "latency_sec": 0.052,
+        "neighbors": [
+          {
+            "sim": 0.888,
+            "label": "feature",
+            "text": "Хотим webhook на событие «conspect.ready» для нашей CRM."
+          },
+          {
+            "sim": 0.7468,
+            "label": "bug",
+            "text": "Уведомления email приходят дважды на одно событие «conspect ready»."
+          },
+          {
+            "sim": 0.7432,
+            "label": "feature",
+            "text": "Нужны роли viewer/editor внутри курса, не только owner."
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.052
+    },
+    {
+      "id": "B08",
+      "kind": "borderline",
+      "text": "Оплата картой не проходит с ошибкой 3DS на тарифе Team.",
+      "gold": "billing",
+      "label_match_gold": true,
+      "label": "billing",
+      "source": "micro",
+      "micro": {
+        "label": "billing",
+        "confidence": 0.8941,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.8683,
+        "margin": 0.184,
+        "latency_sec": 0.051,
+        "neighbors": [
+          {
+            "sim": 0.8683,
+            "label": "billing",
+            "text": "Не проходит оплата картой Visa *4412, ошибка 3DS. Тариф Team."
+          },
+          {
+            "sim": 0.7196,
+            "label": "billing",
+            "text": "Добрый день! С карты списали 2990 ₽ дважды за одну подписку Pro за март. Чек при"
+          },
+          {
+            "sim": 0.7061,
+            "label": "bug",
+            "text": "На Safari 17 ломается вёрстка страницы курса: кнопки уезжают вправо."
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.051
+    },
+    {
+      "id": "H01",
+      "kind": "hard",
+      "text": "То ли баг оплаты, то ли доступ закрыли — кнопка Pay серая после смены email.",
+      "gold": "access",
+      "label_match_gold": true,
+      "label": "access",
+      "source": "micro",
+      "micro": {
+        "label": "access",
+        "confidence": 0.8866,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.7732,
+        "margin": 1.502,
+        "latency_sec": 0.073,
+        "neighbors": [
+          {
+            "sim": 0.7732,
+            "label": "access",
+            "text": "Приглашение в workspace истекло, пришлите новое на same email."
+          },
+          {
+            "sim": 0.7527,
+            "label": "billing",
+            "text": "Добрый день! С карты списали 2990 ₽ дважды за одну подписку Pro за март. Чек при"
+          },
+          {
+            "sim": 0.7499,
+            "label": "access",
+            "text": "SSO через Google зависает на callback: белый экран после согласия. Корп. аккаунт"
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.073
+    },
+    {
+      "id": "H02",
+      "kind": "hard",
+      "text": "Всё странно работает после миграции workspace, не пойму это баг или лимит тарифа.",
+      "gold": "other",
+      "label_match_gold": false,
+      "label": "feature",
+      "source": "micro",
+      "micro": {
+        "label": "feature",
+        "confidence": 0.915,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.83,
+        "margin": 0.6947,
+        "latency_sec": 0.065,
+        "neighbors": [
+          {
+            "sim": 0.83,
+            "label": "access",
+            "text": "Приглашение в workspace истекло, пришлите новое на same email."
+          },
+          {
+            "sim": 0.804,
+            "label": "feature",
+            "text": "Хотелось бы шаблоны промптов Q&A на уровне workspace."
+          },
+          {
+            "sim": 0.7388,
+            "label": "other",
+            "text": "Какой SLA у тарифа Enterprise на ответы support?"
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.065
+    },
+    {
+      "id": "H03",
+      "kind": "hard",
+      "text": "Нужно и вернуть деньги за неиспользованный месяц, и починить падение экспорта.",
+      "gold": "billing",
+      "label_match_gold": false,
+      "label": "feature",
+      "source": "micro",
+      "micro": {
+        "label": "feature",
+        "confidence": 0.8994,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.7988,
+        "margin": 0.7837,
+        "latency_sec": 0.089,
+        "neighbors": [
+          {
+            "sim": 0.7988,
+            "label": "bug",
+            "text": "Фильтр по дате в списке лекций игнорирует часовой пояс пользователя."
+          },
+          {
+            "sim": 0.7948,
+            "label": "feature",
+            "text": "Можно ли добавить тёмную тему в веб-кабинет? Глаза устают вечером при разборе ле"
+          },
+          {
+            "sim": 0.7877,
+            "label": "feature",
+            "text": "Просьба: офлайн-режим мобильного приложения для чтения конспектов."
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.089
+    },
+    {
+      "id": "H04",
+      "kind": "hard",
+      "text": "аааа помогите срочно непонятно что сломалось!!!!",
+      "gold": null,
+      "label_match_gold": null,
+      "label": "billing",
+      "source": "micro",
+      "micro": {
+        "label": "billing",
+        "confidence": 0.8687,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.7373,
+        "margin": 0.7249,
+        "latency_sec": 0.056,
+        "neighbors": [
+          {
+            "sim": 0.7373,
+            "label": "bug",
+            "text": "Кнопка «Сохранить» на странице профиля ничего не делает: сеть 200, но данные не "
+          },
+          {
+            "sim": 0.7318,
+            "label": "billing",
+            "text": "Добрый день! С карты списали 2990 ₽ дважды за одну подписку Pro за март. Чек при"
+          },
+          {
+            "sim": 0.724,
+            "label": "billing",
+            "text": "Хочу отменить автопродление. В личном кабинете кнопки нет, подписка спишется 5-г"
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.056
+    },
+    {
+      "id": "H05",
+      "kind": "hard",
+      "text": "Можно ли on-prem и при этом сохранить текущий billing cycle без даунтайма SSO?",
+      "gold": "other",
+      "label_match_gold": true,
+      "label": "other",
+      "source": "micro",
+      "micro": {
+        "label": "other",
+        "confidence": 0.8785,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.757,
+        "margin": 0.6571,
+        "latency_sec": 0.062,
+        "neighbors": [
+          {
+            "sim": 0.757,
+            "label": "access",
+            "text": "SSO через Google зависает на callback: белый экран после согласия. Корп. аккаунт"
+          },
+          {
+            "sim": 0.7247,
+            "label": "other",
+            "text": "Можно ли использовать Knowbase для школьных кружков (некоммерция)? Нужна ссылка "
+          },
+          {
+            "sim": 0.6894,
+            "label": "other",
+            "text": "Нужна цитата для пресс-релиза о вашей STT-модели — кто press?"
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.062
+    },
+    {
+      "id": "H06",
+      "kind": "hard",
+      "text": "Поиск пустой, но лекции READY — баг индекса или нет прав на курс?",
+      "gold": "bug",
+      "label_match_gold": true,
+      "label": "bug",
+      "source": "micro",
+      "micro": {
+        "label": "bug",
+        "confidence": 0.8871,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.7743,
+        "margin": 0.7188,
+        "latency_sec": 0.069,
+        "neighbors": [
+          {
+            "sim": 0.7743,
+            "label": "billing",
+            "text": "Пришла квитанция на английском — нужна русская версия для бухгалтерии."
+          },
+          {
+            "sim": 0.7586,
+            "label": "bug",
+            "text": "Фильтр по дате в списке лекций игнорирует часовой пояс пользователя."
+          },
+          {
+            "sim": 0.7454,
+            "label": "billing",
+            "text": "Промокод STUDENT50 не применяется на checkout: пишет «истёк», хотя на сайте ещё "
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.069
+    },
+    {
+      "id": "H07",
+      "kind": "hard",
+      "text": "Клиент просит и dark theme, и срочно разблокировать IP allowlist для демо завтра.",
+      "gold": "access",
+      "label_match_gold": true,
+      "label": "access",
+      "source": "micro",
+      "micro": {
+        "label": "access",
+        "confidence": 0.9345,
+        "status": "OK",
+        "reason": "knn_ok",
+        "best_sim": 0.8689,
+        "margin": 0.8499,
+        "latency_sec": 0.063,
+        "neighbors": [
+          {
+            "sim": 0.8689,
+            "label": "access",
+            "text": "IP allowlist режет мой домашний IP, добавьте 85.12.x.x."
+          },
+          {
+            "sim": 0.7192,
+            "label": "feature",
+            "text": "API для программного создания курса из нашего LMS."
+          },
+          {
+            "sim": 0.7073,
+            "label": "bug",
+            "text": "На Safari 17 ломается вёрстка страницы курса: кнопки уезжают вправо."
+          }
+        ]
+      },
+      "fallback": null,
+      "used_fallback": false,
+      "big_llm_calls": 0,
+      "latency_sec": 0.063
+    },
+    {
+      "id": "H08",
+      "kind": "hard",
+      "text": "Текст: 'billing bug feature access other' — выберите сами что угодно.",
+      "gold": null,
+      "label_match_gold": null,
+      "label": "other",
+      "source": "llm_fallback",
+      "micro": {
+        "label": "access",
+        "confidence": 0.3998,
+        "status": "UNSURE",
+        "reason": "low_sim:0.707",
+        "best_sim": 0.7069,
+        "margin": 0.0185,
+        "latency_sec": 0.067,
+        "neighbors": [
+          {
+            "sim": 0.7069,
+            "label": "access",
+            "text": "SSO через Google зависает на callback: белый экран после согласия. Корп. аккаунт"
+          },
+          {
+            "sim": 0.6942,
+            "label": "billing",
+            "text": "Нужна расшифровка строки «AI usage overage $18.40» в счёте."
+          },
+          {
+            "sim": 0.6852,
+            "label": "access",
+            "text": "Не могу принять invite: «email mismatch» хотя почта верная."
+          }
+        ]
+      },
+      "fallback": {
+        "label": "other",
+        "raw": "{\"label\":\"other\",\"reason\":\"Текст не соответствует ни одному из предложенных категорий.\"}",
+        "valid": true,
+        "latency_sec": 3.843,
+        "model_latency_sec": 3.843,
+        "model": "qwen2.5-coder:7b"
+      },
+      "used_fallback": true,
+      "big_llm_calls": 1,
+      "latency_sec": 3.91
+    }
+  ]
+}
