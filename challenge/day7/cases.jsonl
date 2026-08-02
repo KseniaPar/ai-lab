@@ -1,0 +1,14 @@
+{"id": "C01", "kind": "correct", "text": "С карты списали подписку Pro дважды за март, нужен возврат лишнего платежа.", "gold": "billing"}
+{"id": "C02", "kind": "correct", "text": "Приложение падает при открытии раздела Курсы на iPhone 14, версия 3.12.1.", "gold": "bug"}
+{"id": "C03", "kind": "correct", "text": "Добавьте тёмную тему в веб-кабинет — глаза устают вечером.", "gold": "feature"}
+{"id": "C04", "kind": "correct", "text": "Не приходит письмо сброса пароля на anna@example.com, в Спаме тоже пусто.", "gold": "access"}
+{"id": "C05", "kind": "correct", "text": "Где в документации лимит минут STT на тарифе Free?", "gold": "other"}
+{"id": "B01", "kind": "borderline", "text": "Не могу оплатить счет — форма оплаты зависает на Submit и крутится вечно.", "gold": "bug", "note": "может путаться с billing"}
+{"id": "B02", "kind": "borderline", "text": "Коллега уволился, удалите его из workspace и перевыставьте invoice на нового плательщика.", "gold": "access", "note": "смесь access+billing"}
+{"id": "B03", "kind": "borderline", "text": "Промокод STUDENT50 не применяется на checkout, пишет что истёк.", "gold": "billing", "note": "похоже на bug UI"}
+{"id": "B04", "kind": "borderline", "text": "Хотим API-ключ с read-only доступом к курсам для интеграции с LMS.", "gold": "feature", "note": "может казаться access"}
+{"id": "N01", "kind": "noisy", "text": "ааааа ПОМОГИТЕ!!!!! всё сломалось(((( или может я просто туплю???", "gold": null, "note": "нет сигнала категории"}
+{"id": "N02", "kind": "noisy", "text": "asdf qwerty 12345 !@#$% test test TEST", "gold": null, "note": "мусор"}
+{"id": "N03", "kind": "noisy", "text": "Здравствуйте. Спасибо. До свидания.", "gold": null, "note": "пустой смысл"}
+{"id": "N04", "kind": "noisy", "text": "Платёж / баг / доступ / фича — не знаю что выбрать, просто напишите что-нибудь.", "gold": null, "note": "противоречивый шум"}
+{"id": "N05", "kind": "noisy", "text": "URGENT!!! billing bug feature access other ALL OF THEM simultaneously pls fix NOW", "gold": null, "note": "все лейблы сразу"}
