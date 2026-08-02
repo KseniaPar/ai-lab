@@ -1,0 +1,9 @@
+{
+  "step": "upload/prepare",
+  "train_path": "C:\\Users\\user\\Projects\\ai-lab\\challenge\\day6\\dataset\\train.jsonl",
+  "examples": 44,
+  "messages_file": "C:\\Users\\user\\Projects\\ai-lab\\challenge\\day6\\ft_prepare\\training_messages.jsonl",
+  "modelfile": "C:\\Users\\user\\Projects\\ai-lab\\challenge\\day6\\ft_prepare\\Modelfile",
+  "base_model": "qwen2.5-coder:7b",
+  "note": "Full weight FT via OpenAI unavailable; Modelfile few-shot create is local stand-in."
+}

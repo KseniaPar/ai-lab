@@ -1,0 +1,20 @@
+FROM qwen2.5-coder:7b
+SYSTEM """Ты классификатор тикетов поддержки. Ответь ТОЛЬКО валидным JSON без markdown: {"label":"<enum>","reason":"<одно короткое предложение>"}. label ∈ billing|bug|feature|access|other."""
+PARAMETER temperature 0.1
+PARAMETER num_predict 128
+MESSAGE user """Нужны роли viewer/editor внутри курса, не только owner."""
+MESSAGE assistant """{"label": "feature", "reason": "Запрос новой функциональности — feature."}"""
+MESSAGE user """2FA приложение потерял — восстановите через backup codes не выходит."""
+MESSAGE assistant """{"label": "access", "reason": "Проблема с доступом, правами или аутентификацией — access."}"""
+MESSAGE user """Отключите API-ключ sk_live_… — возможно утёк в лог."""
+MESSAGE assistant """{"label": "access", "reason": "Проблема с доступом, правами или аутентификацией — access."}"""
+MESSAGE user """Фильтр по дате в списке лекций игнорирует часовой пояс пользователя."""
+MESSAGE assistant """{"label": "bug", "reason": "Некорректное поведение продукта — bug."}"""
+MESSAGE user """Нужна цитата для пресс-релиза о вашей STT-модели — кто press?"""
+MESSAGE assistant """{"label": "other", "reason": "Общий вопрос без инцидента продукта — other."}"""
+MESSAGE user """После обновления iOS приложение падает при открытии раздела «Курсы». Версия 3.12.1, iPhone 14, лог во вложении."""
+MESSAGE assistant """{"label": "bug", "reason": "Крах приложения — дефект (bug)."}"""
+MESSAGE user """Invoice #INV-20441 оплачен, статус в кабинете всё ещё Unpaid."""
+MESSAGE assistant """{"label": "billing", "reason": "Вопрос про оплату, счёт или подписку — billing."}"""
+MESSAGE user """IP allowlist режет мой домашний IP, добавьте 85.12.x.x."""
+MESSAGE assistant """{"label": "access", "reason": "Проблема с доступом, правами или аутентификацией — access."}"""
