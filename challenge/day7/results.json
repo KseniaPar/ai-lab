@@ -1,0 +1,630 @@
+{
+  "metrics": {
+    "model": "qwen2.5-coder:7b",
+    "cases": 14,
+    "accepted": 7,
+    "rejected": 7,
+    "reject_rate": 0.5,
+    "cases_with_retry": 0,
+    "retries_total": 0,
+    "llm_calls_total": 45,
+    "llm_calls_avg": 3.21,
+    "latency_total_sec": 271.76,
+    "latency_avg_sec": 19.41,
+    "cost_proxy": "llm_calls (local Ollama; no $)",
+    "by_kind": {
+      "correct": {
+        "n": 5,
+        "accepted": 4,
+        "rejected": 1
+      },
+      "borderline": {
+        "n": 4,
+        "accepted": 3,
+        "rejected": 1
+      },
+      "noisy": {
+        "n": 5,
+        "accepted": 0,
+        "rejected": 5
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "C01",
+      "kind": "correct",
+      "gold": "billing",
+      "label_match_gold": true,
+      "decision": "ACCEPT",
+      "label": "billing",
+      "reason": "self_check_ok",
+      "llm_calls": 4,
+      "retries": 0,
+      "latency_sec": 31.43,
+      "final": {
+        "label": "billing",
+        "reason": "Текст тикета содержит конкретную проблему с дублированным платежом за подписку, что соответствует метке 'billing'."
+      },
+      "trace": [
+        {
+          "step": "input_signal",
+          "insufficient": false,
+          "why": ""
+        },
+        {
+          "step": "classify",
+          "raw": "{\"label\":\"billing\",\"reason\":\"Дублированный платеж за подписку\"}",
+          "ok": true,
+          "errs": [],
+          "latency": 4.637
+        },
+        {
+          "step": "redundancy",
+          "labels": [
+            "billing",
+            "billing"
+          ],
+          "majority": "billing",
+          "enough": true,
+          "latency": 12.439
+        },
+        {
+          "step": "self_check",
+          "raw": "{\"verdict\":\"OK\",\"label\":\"billing\",\"reason\":\"Текст тикета содержит конкретную проблему с дублированным платежом за подписку, что соответствует метке 'billing'.\"}",
+          "parsed": {
+            "verdict": "OK",
+            "label": "billing",
+            "reason": "Текст тикета содержит конкретную проблему с дублированным платежом за подписку, что соответствует метке 'billing'."
+          },
+          "latency": 14.35
+        }
+      ]
+    },
+    {
+      "id": "C02",
+      "kind": "correct",
+      "gold": "bug",
+      "label_match_gold": true,
+      "decision": "ACCEPT",
+      "label": "bug",
+      "reason": "self_check_ok",
+      "llm_calls": 4,
+      "retries": 0,
+      "latency_sec": 29.907,
+      "final": {
+        "label": "bug",
+        "reason": "Текст тикета содержит конкретную проблему, и предложенный label соответствует ей."
+      },
+      "trace": [
+        {
+          "step": "input_signal",
+          "insufficient": false,
+          "why": ""
+        },
+        {
+          "step": "classify",
+          "raw": "{\"label\":\"bug\",\"reason\":\"Приложение падает при открытии раздела Курсы\"}",
+          "ok": true,
+          "errs": [],
+          "latency": 7.343
+        },
+        {
+          "step": "redundancy",
+          "labels": [
+            "bug",
+            "bug"
+          ],
+          "majority": "bug",
+          "enough": true,
+          "latency": 14.297
+        },
+        {
+          "step": "self_check",
+          "raw": "{\"verdict\":\"OK\",\"label\":\"bug\",\"reason\":\"Текст тикета содержит конкретную проблему, и предложенный label соответствует ей.\"}",
+          "parsed": {
+            "verdict": "OK",
+            "label": "bug",
+            "reason": "Текст тикета содержит конкретную проблему, и предложенный label соответствует ей."
+          },
+          "latency": 8.265
+        }
+      ]
+    },
+    {
+      "id": "C03",
+      "kind": "correct",
+      "gold": "feature",
+      "label_match_gold": true,
+      "decision": "REJECT",
+      "label": "feature",
+      "reason": "redundancy_disagreement",
+      "llm_calls": 3,
+      "retries": 0,
+      "latency_sec": 23.498,
+      "final": null,
+      "trace": [
+        {
+          "step": "input_signal",
+          "insufficient": false,
+          "why": ""
+        },
+        {
+          "step": "classify",
+          "raw": "{\"label\":\"feature\",\"reason\":\"Пользователь хочет добавить функцию для выбора тёмной темы в веб-кабинете.\"}",
+          "ok": true,
+          "errs": [],
+          "latency": 10.926
+        },
+        {
+          "step": "redundancy",
+          "labels": [
+            "feature",
+            "other"
+          ],
+          "majority": null,
+          "enough": false,
+          "latency": 12.569
+        }
+      ]
+    },
+    {
+      "id": "C04",
+      "kind": "correct",
+      "gold": "access",
+      "label_match_gold": false,
+      "decision": "ACCEPT",
+      "label": "bug",
+      "reason": "self_check_ok",
+      "llm_calls": 4,
+      "retries": 0,
+      "latency_sec": 33.047,
+      "final": {
+        "label": "bug",
+        "reason": "Текст тикета содержит конкретную проблему, связанную с отсутствием письма для восстановления пароля. Предложенный label соответствует описанию проблемы."
+      },
+      "trace": [
+        {
+          "step": "input_signal",
+          "insufficient": false,
+          "why": ""
+        },
+        {
+          "step": "classify",
+          "raw": "{\"label\":\"bug\",\"reason\":\"Пользователь не получает письмо для восстановления пароля.\"}",
+          "ok": true,
+          "errs": [],
+          "latency": 7.069
+        },
+        {
+          "step": "redundancy",
+          "labels": [
+            "bug",
+            "bug"
+          ],
+          "majority": "bug",
+          "enough": true,
+          "latency": 16.067
+        },
+        {
+          "step": "self_check",
+          "raw": "{\"verdict\":\"OK\",\"label\":\"bug\",\"reason\":\"Текст тикета содержит конкретную проблему, связанную с отсутствием письма для восстановления пароля. Предложенный label соответствует описанию проблемы.\"}",
+          "parsed": {
+            "verdict": "OK",
+            "label": "bug",
+            "reason": "Текст тикета содержит конкретную проблему, связанную с отсутствием письма для восстановления пароля. Предложенный label соответствует описанию проблемы."
+          },
+          "latency": 9.907
+        }
+      ]
+    },
+    {
+      "id": "C05",
+      "kind": "correct",
+      "gold": "other",
+      "label_match_gold": false,
+      "decision": "ACCEPT",
+      "label": "billing",
+      "reason": "self_check_ok",
+      "llm_calls": 4,
+      "retries": 0,
+      "latency_sec": 30.473,
+      "final": {
+        "label": "billing",
+        "reason": "Текст тикета и предложенный ответ соответствуют, label верен и уверенность высокая."
+      },
+      "trace": [
+        {
+          "step": "input_signal",
+          "insufficient": false,
+          "why": ""
+        },
+        {
+          "step": "classify",
+          "raw": "{\"label\":\"billing\",\"reason\":\"Лимит минут STT на тарифе Free указан в разделе 'Ограничения' документации.\"}",
+          "ok": true,
+          "errs": [],
+          "latency": 5.328
+        },
+        {
+          "step": "redundancy",
+          "labels": [
+            "billing",
+            "billing"
+          ],
+          "majority": "billing",
+          "enough": true,
+          "latency": 14.186
+        },
+        {
+          "step": "self_check",
+          "raw": "{\"verdict\":\"OK\",\"label\":\"billing\",\"reason\":\"Текст тикета и предложенный ответ соответствуют, label верен и уверенность высокая.\"}",
+          "parsed": {
+            "verdict": "OK",
+            "label": "billing",
+            "reason": "Текст тикета и предложенный ответ соответствуют, label верен и уверенность высокая."
+          },
+          "latency": 10.955
+        }
+      ]
+    },
+    {
+      "id": "B01",
+      "kind": "borderline",
+      "gold": "bug",
+      "label_match_gold": false,
+      "decision": "ACCEPT",
+      "label": "billing",
+      "reason": "self_check_ok",
+      "llm_calls": 4,
+      "retries": 0,
+      "latency_sec": 24.508,
+      "final": {
+        "label": "billing",
+        "reason": "Текст тикета и предложенный label соответствуют описанию проблемы с формой оплаты."
+      },
+      "trace": [
+        {
+          "step": "input_signal",
+          "insufficient": false,
+          "why": ""
+        },
+        {
+          "step": "classify",
+          "raw": "{\"label\":\"billing\",\"reason\":\"Форма оплаты зависает при попытке подтверждения транзакции.\"}",
+          "ok": true,
+          "errs": [],
+          "latency": 6.31
+        },
+        {
+          "step": "redundancy",
+          "labels": [
+            "billing",
+            "billing"
+          ],
+          "majority": "billing",
+          "enough": true,
+          "latency": 9.594
+        },
+        {
+          "step": "self_check",
+          "raw": "{\"verdict\":\"OK\",\"label\":\"billing\",\"reason\":\"Текст тикета и предложенный label соответствуют описанию проблемы с формой оплаты.\"}",
+          "parsed": {
+            "verdict": "OK",
+            "label": "billing",
+            "reason": "Текст тикета и предложенный label соответствуют описанию проблемы с формой оплаты."
+          },
+          "latency": 8.601
+        }
+      ]
+    },
+    {
+      "id": "B02",
+      "kind": "borderline",
+      "gold": "access",
+      "label_match_gold": true,
+      "decision": "REJECT",
+      "label": "access",
+      "reason": "redundancy_disagreement",
+      "llm_calls": 3,
+      "retries": 0,
+      "latency_sec": 21.654,
+      "final": null,
+      "trace": [
+        {
+          "step": "input_signal",
+          "insufficient": false,
+          "why": ""
+        },
+        {
+          "step": "classify",
+          "raw": "{\"label\":\"access\",\"reason\":\"Удаление пользователя из workspace и переустановка счетов\"}",
+          "ok": true,
+          "errs": [],
+          "latency": 8.318
+        },
+        {
+          "step": "redundancy",
+          "labels": [
+            "billing",
+            "access"
+          ],
+          "majority": null,
+          "enough": false,
+          "latency": 13.334
+        }
+      ]
+    },
+    {
+      "id": "B03",
+      "kind": "borderline",
+      "gold": "billing",
+      "label_match_gold": false,
+      "decision": "ACCEPT",
+      "label": "bug",
+      "reason": "self_check_ok",
+      "llm_calls": 4,
+      "retries": 0,
+      "latency_sec": 27.246,
+      "final": {
+        "label": "bug",
+        "reason": "Текст тикета содержит конкретную проблему с промокодом и его использованием, что соответствует метке 'bug'."
+      },
+      "trace": [
+        {
+          "step": "input_signal",
+          "insufficient": false,
+          "why": ""
+        },
+        {
+          "step": "classify",
+          "raw": "{\"label\":\"bug\",\"reason\":\"Промокод STUDENT50 не применяется на checkout, пишет что истёк.\"}",
+          "ok": true,
+          "errs": [],
+          "latency": 6.591
+        },
+        {
+          "step": "redundancy",
+          "labels": [
+            "bug",
+            "bug"
+          ],
+          "majority": "bug",
+          "enough": true,
+          "latency": 14.331
+        },
+        {
+          "step": "self_check",
+          "raw": "{\"verdict\":\"OK\",\"label\":\"bug\",\"reason\":\"Текст тикета содержит конкретную проблему с промокодом и его использованием, что соответствует метке 'bug'.\"}",
+          "parsed": {
+            "verdict": "OK",
+            "label": "bug",
+            "reason": "Текст тикета содержит конкретную проблему с промокодом и его использованием, что соответствует метке 'bug'."
+          },
+          "latency": 6.322
+        }
+      ]
+    },
+    {
+      "id": "B04",
+      "kind": "borderline",
+      "gold": "feature",
+      "label_match_gold": false,
+      "decision": "ACCEPT",
+      "label": "access",
+      "reason": "self_check_ok",
+      "llm_calls": 4,
+      "retries": 0,
+      "latency_sec": 16.319,
+      "final": {
+        "label": "access",
+        "reason": "Текст тикета и предложенный ответ соответствуют друг другу, запрос на получение API-ключа с ограниченными правами доступа."
+      },
+      "trace": [
+        {
+          "step": "input_signal",
+          "insufficient": false,
+          "why": ""
+        },
+        {
+          "step": "classify",
+          "raw": "{\"label\":\"access\",\"reason\":\"Запрос на получение API-ключа с ограниченными правами доступа.\"}",
+          "ok": true,
+          "errs": [],
+          "latency": 3.674
+        },
+        {
+          "step": "redundancy",
+          "labels": [
+            "access",
+            "access"
+          ],
+          "majority": "access",
+          "enough": true,
+          "latency": 6.024
+        },
+        {
+          "step": "self_check",
+          "raw": "{\"verdict\":\"OK\",\"label\":\"access\",\"reason\":\"Текст тикета и предложенный ответ соответствуют друг другу, запрос на получение API-ключа с ограниченными правами доступа.\"}",
+          "parsed": {
+            "verdict": "OK",
+            "label": "access",
+            "reason": "Текст тикета и предложенный ответ соответствуют друг другу, запрос на получение API-ключа с ограниченными правами доступа."
+          },
+          "latency": 6.619
+        }
+      ]
+    },
+    {
+      "id": "N01",
+      "kind": "noisy",
+      "gold": null,
+      "label_match_gold": null,
+      "decision": "REJECT",
+      "label": "bug",
+      "reason": "self_check_bad_fix",
+      "llm_calls": 4,
+      "retries": 0,
+      "latency_sec": 14.419,
+      "final": null,
+      "trace": [
+        {
+          "step": "input_signal",
+          "insufficient": false,
+          "why": ""
+        },
+        {
+          "step": "classify",
+          "raw": "{\"label\":\"bug\",\"reason\":\"Проблемы с работой системы\"}",
+          "ok": true,
+          "errs": [],
+          "latency": 2.982
+        },
+        {
+          "step": "redundancy",
+          "labels": [
+            "bug",
+            "bug"
+          ],
+          "majority": "bug",
+          "enough": true,
+          "latency": 4.545
+        },
+        {
+          "step": "self_check",
+          "raw": "{\"verdict\":\"FIX\",\"label\":\"support\",\"reason\":\"Текст не содержит конкретной проблемы, скорее всего троллинг или бессмысленное сообщение. Необходимо помочь пользователю решить проблему.\"}",
+          "parsed": {
+            "verdict": "FIX",
+            "label": "support",
+            "reason": "Текст не содержит конкретной проблемы, скорее всего троллинг или бессмысленное сообщение. Необходимо помочь пользователю решить проблему."
+          },
+          "latency": 6.889
+        }
+      ]
+    },
+    {
+      "id": "N02",
+      "kind": "noisy",
+      "gold": null,
+      "label_match_gold": null,
+      "decision": "REJECT",
+      "label": null,
+      "reason": "insufficient_signal:placeholder_noise",
+      "llm_calls": 0,
+      "retries": 0,
+      "latency_sec": 0.0,
+      "final": null,
+      "trace": [
+        {
+          "step": "input_signal",
+          "insufficient": true,
+          "why": "placeholder_noise"
+        }
+      ]
+    },
+    {
+      "id": "N03",
+      "kind": "noisy",
+      "gold": null,
+      "label_match_gold": null,
+      "decision": "REJECT",
+      "label": "other",
+      "reason": "self_check_unsure",
+      "llm_calls": 4,
+      "retries": 0,
+      "latency_sec": 12.835,
+      "final": null,
+      "trace": [
+        {
+          "step": "input_signal",
+          "insufficient": false,
+          "why": ""
+        },
+        {
+          "step": "classify",
+          "raw": "{\"label\":\"other\",\"reason\":\"Приветствие и прощание\"}",
+          "ok": true,
+          "errs": [],
+          "latency": 2.601
+        },
+        {
+          "step": "redundancy",
+          "labels": [
+            "other",
+            "other"
+          ],
+          "majority": "other",
+          "enough": true,
+          "latency": 4.707
+        },
+        {
+          "step": "self_check",
+          "raw": "{\"verdict\":\"UNSURE\",\"label\":null,\"reason\":\"Сообщение не содержит конкретной проблемы или запроса, а скорее всего является приветствием и прощанием.\"}",
+          "parsed": {
+            "verdict": "UNSURE",
+            "label": null,
+            "reason": "Сообщение не содержит конкретной проблемы или запроса, а скорее всего является приветствием и прощанием."
+          },
+          "latency": 5.524
+        }
+      ]
+    },
+    {
+      "id": "N04",
+      "kind": "noisy",
+      "gold": null,
+      "label_match_gold": null,
+      "decision": "REJECT",
+      "label": "billing",
+      "reason": "redundancy_disagreement",
+      "llm_calls": 3,
+      "retries": 0,
+      "latency_sec": 6.428,
+      "final": null,
+      "trace": [
+        {
+          "step": "input_signal",
+          "insufficient": false,
+          "why": ""
+        },
+        {
+          "step": "classify",
+          "raw": "{\"label\":\"billing\",\"reason\":\"Неизвестный тип тикета\"}",
+          "ok": true,
+          "errs": [],
+          "latency": 2.698
+        },
+        {
+          "step": "redundancy",
+          "labels": [
+            "billing",
+            "other"
+          ],
+          "majority": null,
+          "enough": false,
+          "latency": 3.728
+        }
+      ]
+    },
+    {
+      "id": "N05",
+      "kind": "noisy",
+      "gold": null,
+      "label_match_gold": null,
+      "decision": "REJECT",
+      "label": null,
+      "reason": "insufficient_signal:all_labels_stuffed",
+      "llm_calls": 0,
+      "retries": 0,
+      "latency_sec": 0.0,
+      "final": null,
+      "trace": [
+        {
+          "step": "input_signal",
+          "insufficient": true,
+          "why": "all_labels_stuffed"
+        }
+      ]
+    }
+  ]
+}
