@@ -1,0 +1,713 @@
+{
+  "summary": {
+    "variant": "multi_stage",
+    "models": {
+      "normalize": "qwen2.5-coder:1.5b",
+      "classify": "qwen2.5-coder:7b",
+      "decide": "rules"
+    },
+    "cases": 10,
+    "valid_rate": 0.8,
+    "label_acc": 0.5,
+    "urgency_acc": 0.7,
+    "needs_human_acc": 0.8,
+    "all_fields_acc": 0.4,
+    "llm_calls_total": 20,
+    "latency_total_sec": 28.1,
+    "latency_avg_sec": 2.81
+  },
+  "results": [
+    {
+      "id": "M01",
+      "text": "СРОЧНО!!! Карту списали дважды за Pro, денег нет на еду, верните СЕГОДНЯ или подам в суд.",
+      "gold": {
+        "label": "billing",
+        "urgency": "high",
+        "needs_human": true
+      },
+      "scores": {
+        "label": true,
+        "urgency": true,
+        "needs_human": true
+      },
+      "variant": "multi_stage",
+      "models": {
+        "normalize": "qwen2.5-coder:1.5b",
+        "classify": "qwen2.5-coder:7b",
+        "decide": "rules"
+      },
+      "result": {
+        "label": "billing",
+        "urgency": "high",
+        "needs_human": true,
+        "reason": "billing; urgency=high; human=True",
+        "clean": "Карта списана дважды за Про. Денег нет на еду. Верните СЕГОДНЯ или подам в суд."
+      },
+      "valid": true,
+      "errors": [],
+      "llm_calls": 2,
+      "latency_sec": 3.756,
+      "trace": [
+        {
+          "stage": 1,
+          "name": "normalize",
+          "model": "qwen2.5-coder:1.5b",
+          "out": {
+            "clean": "Карта списана дважды за Про. Денег нет на еду. Верните СЕГОДНЯ или подам в суд."
+          },
+          "latency": 1.544
+        },
+        {
+          "stage": 2,
+          "name": "classify",
+          "model": "qwen2.5-coder:7b",
+          "raw": "{\"label\":\"billing\"}",
+          "out": {
+            "label": "billing"
+          },
+          "latency": 2.212
+        },
+        {
+          "stage": 3,
+          "name": "decide",
+          "model": "rules",
+          "out": {
+            "urgency": "high",
+            "needs_human": true
+          },
+          "latency": 0.0
+        },
+        {
+          "stage": 4,
+          "name": "assemble",
+          "model": "none",
+          "out": {
+            "label": "billing",
+            "urgency": "high",
+            "needs_human": true,
+            "reason": "billing; urgency=high; human=True",
+            "clean": "Карта списана дважды за Про. Денег нет на еду. Верните СЕГОДНЯ или подам в суд."
+          },
+          "latency": 0.0
+        }
+      ]
+    },
+    {
+      "id": "M02",
+      "text": "После обновления iOS приложение падает при открытии Курсов. Лог во вложении.",
+      "gold": {
+        "label": "bug",
+        "urgency": "medium",
+        "needs_human": false
+      },
+      "scores": {
+        "label": true,
+        "urgency": true,
+        "needs_human": true
+      },
+      "variant": "multi_stage",
+      "models": {
+        "normalize": "qwen2.5-coder:1.5b",
+        "classify": "qwen2.5-coder:7b",
+        "decide": "rules"
+      },
+      "result": {
+        "label": "bug",
+        "urgency": "medium",
+        "needs_human": false,
+        "reason": "bug; urgency=medium; human=False",
+        "clean": "При обновлении iOS приложение падает при открытии Курсов. Лог во вложении."
+      },
+      "valid": true,
+      "errors": [],
+      "llm_calls": 2,
+      "latency_sec": 2.748,
+      "trace": [
+        {
+          "stage": 1,
+          "name": "normalize",
+          "model": "qwen2.5-coder:1.5b",
+          "out": {
+            "clean": "При обновлении iOS приложение падает при открытии Курсов. Лог во вложении."
+          },
+          "latency": 1.358
+        },
+        {
+          "stage": 2,
+          "name": "classify",
+          "model": "qwen2.5-coder:7b",
+          "raw": "{\"label\":\"bug\"}",
+          "out": {
+            "label": "bug"
+          },
+          "latency": 1.39
+        },
+        {
+          "stage": 3,
+          "name": "decide",
+          "model": "rules",
+          "out": {
+            "urgency": "medium",
+            "needs_human": false
+          },
+          "latency": 0.0
+        },
+        {
+          "stage": 4,
+          "name": "assemble",
+          "model": "none",
+          "out": {
+            "label": "bug",
+            "urgency": "medium",
+            "needs_human": false,
+            "reason": "bug; urgency=medium; human=False",
+            "clean": "При обновлении iOS приложение падает при открытии Курсов. Лог во вложении."
+          },
+          "latency": 0.0
+        }
+      ]
+    },
+    {
+      "id": "M03",
+      "text": "Можно ли добавить тёмную тему? Не срочно, просто идея.",
+      "gold": {
+        "label": "feature",
+        "urgency": "low",
+        "needs_human": false
+      },
+      "scores": {
+        "label": true,
+        "urgency": true,
+        "needs_human": true
+      },
+      "variant": "multi_stage",
+      "models": {
+        "normalize": "qwen2.5-coder:1.5b",
+        "classify": "qwen2.5-coder:7b",
+        "decide": "rules"
+      },
+      "result": {
+        "label": "feature",
+        "urgency": "low",
+        "needs_human": false,
+        "reason": "feature; urgency=low; human=False",
+        "clean": "Можно ли добавить темную тему?"
+      },
+      "valid": true,
+      "errors": [],
+      "llm_calls": 2,
+      "latency_sec": 2.04,
+      "trace": [
+        {
+          "stage": 1,
+          "name": "normalize",
+          "model": "qwen2.5-coder:1.5b",
+          "out": {
+            "clean": "Можно ли добавить темную тему?"
+          },
+          "latency": 0.934
+        },
+        {
+          "stage": 2,
+          "name": "classify",
+          "model": "qwen2.5-coder:7b",
+          "raw": "{\"label\":\"feature\"}",
+          "out": {
+            "label": "feature"
+          },
+          "latency": 1.105
+        },
+        {
+          "stage": 3,
+          "name": "decide",
+          "model": "rules",
+          "out": {
+            "urgency": "low",
+            "needs_human": false
+          },
+          "latency": 0.0
+        },
+        {
+          "stage": 4,
+          "name": "assemble",
+          "model": "none",
+          "out": {
+            "label": "feature",
+            "urgency": "low",
+            "needs_human": false,
+            "reason": "feature; urgency=low; human=False",
+            "clean": "Можно ли добавить темную тему?"
+          },
+          "latency": 0.0
+        }
+      ]
+    },
+    {
+      "id": "M04",
+      "text": "Уволили сотрудника u_88421 — отзовите доступ к Prod ASAP, есть риск утечки.",
+      "gold": {
+        "label": "access",
+        "urgency": "high",
+        "needs_human": true
+      },
+      "scores": {
+        "label": true,
+        "urgency": true,
+        "needs_human": true
+      },
+      "variant": "multi_stage",
+      "models": {
+        "normalize": "qwen2.5-coder:1.5b",
+        "classify": "qwen2.5-coder:7b",
+        "decide": "rules"
+      },
+      "result": {
+        "label": "access",
+        "urgency": "high",
+        "needs_human": true,
+        "reason": "access; urgency=high; human=True",
+        "clean": "Уволили сотрудника u_88421 — отзовите доступ к Prod ASAP, есть риск утечки."
+      },
+      "valid": true,
+      "errors": [],
+      "llm_calls": 2,
+      "latency_sec": 2.602,
+      "trace": [
+        {
+          "stage": 1,
+          "name": "normalize",
+          "model": "qwen2.5-coder:1.5b",
+          "out": {
+            "clean": "Уволили сотрудника u_88421 — отзовите доступ к Prod ASAP, есть риск утечки."
+          },
+          "latency": 1.218
+        },
+        {
+          "stage": 2,
+          "name": "classify",
+          "model": "qwen2.5-coder:7b",
+          "raw": "{\"label\":\"access\"}",
+          "out": {
+            "label": "access"
+          },
+          "latency": 1.384
+        },
+        {
+          "stage": 3,
+          "name": "decide",
+          "model": "rules",
+          "out": {
+            "urgency": "high",
+            "needs_human": true
+          },
+          "latency": 0.0
+        },
+        {
+          "stage": 4,
+          "name": "assemble",
+          "model": "none",
+          "out": {
+            "label": "access",
+            "urgency": "high",
+            "needs_human": true,
+            "reason": "access; urgency=high; human=True",
+            "clean": "Уволили сотрудника u_88421 — отзовите доступ к Prod ASAP, есть риск утечки."
+          },
+          "latency": 0.0
+        }
+      ]
+    },
+    {
+      "id": "M05",
+      "text": "Где в docs лимит STT на Free? Просто уточняю перед покупкой.",
+      "gold": {
+        "label": "other",
+        "urgency": "low",
+        "needs_human": false
+      },
+      "scores": {
+        "label": false,
+        "urgency": false,
+        "needs_human": false
+      },
+      "variant": "multi_stage",
+      "models": {
+        "normalize": "qwen2.5-coder:1.5b",
+        "classify": "qwen2.5-coder:7b",
+        "decide": "rules"
+      },
+      "result": null,
+      "valid": false,
+      "errors": [
+        "classify_failed"
+      ],
+      "llm_calls": 2,
+      "latency_sec": 3.268,
+      "trace": [
+        {
+          "stage": 1,
+          "name": "normalize",
+          "model": "qwen2.5-coder:1.5b",
+          "out": {
+            "clean": "В документации нет информации о лимите STT для бесплатной версии."
+          },
+          "latency": 1.103
+        },
+        {
+          "stage": 2,
+          "name": "classify",
+          "model": "qwen2.5-coder:7b",
+          "raw": "{\"label\":\"billing|bug|feature|access|other\"}",
+          "out": null,
+          "latency": 2.166
+        }
+      ]
+    },
+    {
+      "id": "M06",
+      "text": "Не проходит оплата картой + форма checkout зависает. Клиент Enterprise, эскалация.",
+      "gold": {
+        "label": "bug",
+        "urgency": "high",
+        "needs_human": true
+      },
+      "scores": {
+        "label": false,
+        "urgency": true,
+        "needs_human": true
+      },
+      "variant": "multi_stage",
+      "models": {
+        "normalize": "qwen2.5-coder:1.5b",
+        "classify": "qwen2.5-coder:7b",
+        "decide": "rules"
+      },
+      "result": {
+        "label": "access",
+        "urgency": "high",
+        "needs_human": true,
+        "reason": "access; urgency=high; human=True",
+        "clean": "Клиент Enterprise, эскалация"
+      },
+      "valid": true,
+      "errors": [],
+      "llm_calls": 2,
+      "latency_sec": 2.061,
+      "trace": [
+        {
+          "stage": 1,
+          "name": "normalize",
+          "model": "qwen2.5-coder:1.5b",
+          "out": {
+            "clean": "Клиент Enterprise, эскалация"
+          },
+          "latency": 0.935
+        },
+        {
+          "stage": 2,
+          "name": "classify",
+          "model": "qwen2.5-coder:7b",
+          "raw": "{\"label\":\"access\"}",
+          "out": {
+            "label": "access"
+          },
+          "latency": 1.125
+        },
+        {
+          "stage": 3,
+          "name": "decide",
+          "model": "rules",
+          "out": {
+            "urgency": "high",
+            "needs_human": true
+          },
+          "latency": 0.0
+        },
+        {
+          "stage": 4,
+          "name": "assemble",
+          "model": "none",
+          "out": {
+            "label": "access",
+            "urgency": "high",
+            "needs_human": true,
+            "reason": "access; urgency=high; human=True",
+            "clean": "Клиент Enterprise, эскалация"
+          },
+          "latency": 0.0
+        }
+      ]
+    },
+    {
+      "id": "M07",
+      "text": "Промокод STUDENT50 не применяется на checkout, пишет истёк, хотя баннер ещё висит.",
+      "gold": {
+        "label": "billing",
+        "urgency": "medium",
+        "needs_human": false
+      },
+      "scores": {
+        "label": false,
+        "urgency": true,
+        "needs_human": true
+      },
+      "variant": "multi_stage",
+      "models": {
+        "normalize": "qwen2.5-coder:1.5b",
+        "classify": "qwen2.5-coder:7b",
+        "decide": "rules"
+      },
+      "result": {
+        "label": "bug",
+        "urgency": "medium",
+        "needs_human": false,
+        "reason": "bug; urgency=medium; human=False",
+        "clean": "Промокод STUDENT50 не применяется на checkout, пишет истёк, хотя баннер ещё висит."
+      },
+      "valid": true,
+      "errors": [],
+      "llm_calls": 2,
+      "latency_sec": 2.895,
+      "trace": [
+        {
+          "stage": 1,
+          "name": "normalize",
+          "model": "qwen2.5-coder:1.5b",
+          "out": {
+            "clean": "Промокод STUDENT50 не применяется на checkout, пишет истёк, хотя баннер ещё висит."
+          },
+          "latency": 1.411
+        },
+        {
+          "stage": 2,
+          "name": "classify",
+          "model": "qwen2.5-coder:7b",
+          "raw": "{\"label\":\"bug\"}",
+          "out": {
+            "label": "bug"
+          },
+          "latency": 1.483
+        },
+        {
+          "stage": 3,
+          "name": "decide",
+          "model": "rules",
+          "out": {
+            "urgency": "medium",
+            "needs_human": false
+          },
+          "latency": 0.0
+        },
+        {
+          "stage": 4,
+          "name": "assemble",
+          "model": "none",
+          "out": {
+            "label": "bug",
+            "urgency": "medium",
+            "needs_human": false,
+            "reason": "bug; urgency=medium; human=False",
+            "clean": "Промокод STUDENT50 не применяется на checkout, пишет истёк, хотя баннер ещё висит."
+          },
+          "latency": 0.0
+        }
+      ]
+    },
+    {
+      "id": "M08",
+      "text": "Нужен webhook conspect.ready для CRM и роль viewer в курсе — roadmap ok?",
+      "gold": {
+        "label": "feature",
+        "urgency": "low",
+        "needs_human": false
+      },
+      "scores": {
+        "label": false,
+        "urgency": false,
+        "needs_human": false
+      },
+      "variant": "multi_stage",
+      "models": {
+        "normalize": "qwen2.5-coder:1.5b",
+        "classify": "qwen2.5-coder:7b",
+        "decide": "rules"
+      },
+      "result": null,
+      "valid": false,
+      "errors": [
+        "classify_failed"
+      ],
+      "llm_calls": 2,
+      "latency_sec": 2.576,
+      "trace": [
+        {
+          "stage": 1,
+          "name": "normalize",
+          "model": "qwen2.5-coder:1.5b",
+          "out": {
+            "clean": "Нужен webhook Conspect.Ready для CRM и роль Viewer в курсе — roadmap ok?"
+          },
+          "latency": 1.136
+        },
+        {
+          "stage": 2,
+          "name": "classify",
+          "model": "qwen2.5-coder:7b",
+          "raw": "{\"label\":\"feature|access\"}",
+          "out": null,
+          "latency": 1.44
+        }
+      ]
+    },
+    {
+      "id": "M09",
+      "text": "SSO Google белый экран на callback, половина команды не может войти с утра.",
+      "gold": {
+        "label": "access",
+        "urgency": "high",
+        "needs_human": true
+      },
+      "scores": {
+        "label": false,
+        "urgency": true,
+        "needs_human": true
+      },
+      "variant": "multi_stage",
+      "models": {
+        "normalize": "qwen2.5-coder:1.5b",
+        "classify": "qwen2.5-coder:7b",
+        "decide": "rules"
+      },
+      "result": {
+        "label": "bug",
+        "urgency": "high",
+        "needs_human": true,
+        "reason": "bug; urgency=high; human=True",
+        "clean": "Пользователи заходят в систему через SSO Google, но видят белый экран на callback. Половина команды не может войти с утра."
+      },
+      "valid": true,
+      "errors": [],
+      "llm_calls": 2,
+      "latency_sec": 3.007,
+      "trace": [
+        {
+          "stage": 1,
+          "name": "normalize",
+          "model": "qwen2.5-coder:1.5b",
+          "out": {
+            "clean": "Пользователи заходят в систему через SSO Google, но видят белый экран на callback. Половина команды не может войти с утра."
+          },
+          "latency": 1.517
+        },
+        {
+          "stage": 2,
+          "name": "classify",
+          "model": "qwen2.5-coder:7b",
+          "raw": "{\"label\":\"bug\"}",
+          "out": {
+            "label": "bug"
+          },
+          "latency": 1.49
+        },
+        {
+          "stage": 3,
+          "name": "decide",
+          "model": "rules",
+          "out": {
+            "urgency": "high",
+            "needs_human": true
+          },
+          "latency": 0.0
+        },
+        {
+          "stage": 4,
+          "name": "assemble",
+          "model": "none",
+          "out": {
+            "label": "bug",
+            "urgency": "high",
+            "needs_human": true,
+            "reason": "bug; urgency=high; human=True",
+            "clean": "Пользователи заходят в систему через SSO Google, но видят белый экран на callback. Половина команды не может войти с утра."
+          },
+          "latency": 0.0
+        }
+      ]
+    },
+    {
+      "id": "M10",
+      "text": "Таймкоды в цитатах сдвинуты на ~30 секунд, мешает учиться но не блокер.",
+      "gold": {
+        "label": "bug",
+        "urgency": "low",
+        "needs_human": false
+      },
+      "scores": {
+        "label": true,
+        "urgency": false,
+        "needs_human": true
+      },
+      "variant": "multi_stage",
+      "models": {
+        "normalize": "qwen2.5-coder:1.5b",
+        "classify": "qwen2.5-coder:7b",
+        "decide": "rules"
+      },
+      "result": {
+        "label": "bug",
+        "urgency": "medium",
+        "needs_human": false,
+        "reason": "bug; urgency=medium; human=False",
+        "clean": "В цитатах таймкоды сдвинуты на ~30 секунд, мешает учиться но не блокер."
+      },
+      "valid": true,
+      "errors": [],
+      "llm_calls": 2,
+      "latency_sec": 3.147,
+      "trace": [
+        {
+          "stage": 1,
+          "name": "normalize",
+          "model": "qwen2.5-coder:1.5b",
+          "out": {
+            "clean": "В цитатах таймкоды сдвинуты на ~30 секунд, мешает учиться но не блокер."
+          },
+          "latency": 1.649
+        },
+        {
+          "stage": 2,
+          "name": "classify",
+          "model": "qwen2.5-coder:7b",
+          "raw": "{\"label\":\"bug\"}",
+          "out": {
+            "label": "bug"
+          },
+          "latency": 1.498
+        },
+        {
+          "stage": 3,
+          "name": "decide",
+          "model": "rules",
+          "out": {
+            "urgency": "medium",
+            "needs_human": false
+          },
+          "latency": 0.0
+        },
+        {
+          "stage": 4,
+          "name": "assemble",
+          "model": "none",
+          "out": {
+            "label": "bug",
+            "urgency": "medium",
+            "needs_human": false,
+            "reason": "bug; urgency=medium; human=False",
+            "clean": "В цитатах таймкоды сдвинуты на ~30 секунд, мешает учиться но не блокер."
+          },
+          "latency": 0.0
+        }
+      ]
+    }
+  ]
+}

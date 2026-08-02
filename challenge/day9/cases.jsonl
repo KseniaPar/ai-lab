@@ -1,0 +1,10 @@
+{"id": "M01", "text": "СРОЧНО!!! Карту списали дважды за Pro, денег нет на еду, верните СЕГОДНЯ или подам в суд.", "gold": {"label": "billing", "urgency": "high", "needs_human": true}}
+{"id": "M02", "text": "После обновления iOS приложение падает при открытии Курсов. Лог во вложении.", "gold": {"label": "bug", "urgency": "medium", "needs_human": false}}
+{"id": "M03", "text": "Можно ли добавить тёмную тему? Не срочно, просто идея.", "gold": {"label": "feature", "urgency": "low", "needs_human": false}}
+{"id": "M04", "text": "Уволили сотрудника u_88421 — отзовите доступ к Prod ASAP, есть риск утечки.", "gold": {"label": "access", "urgency": "high", "needs_human": true}}
+{"id": "M05", "text": "Где в docs лимит STT на Free? Просто уточняю перед покупкой.", "gold": {"label": "other", "urgency": "low", "needs_human": false}}
+{"id": "M06", "text": "Не проходит оплата картой + форма checkout зависает. Клиент Enterprise, эскалация.", "gold": {"label": "bug", "urgency": "high", "needs_human": true}}
+{"id": "M07", "text": "Промокод STUDENT50 не применяется на checkout, пишет истёк, хотя баннер ещё висит.", "gold": {"label": "billing", "urgency": "medium", "needs_human": false}}
+{"id": "M08", "text": "Нужен webhook conspect.ready для CRM и роль viewer в курсе — roadmap ok?", "gold": {"label": "feature", "urgency": "low", "needs_human": false}}
+{"id": "M09", "text": "SSO Google белый экран на callback, половина команды не может войти с утра.", "gold": {"label": "access", "urgency": "high", "needs_human": true}}
+{"id": "M10", "text": "Таймкоды в цитатах сдвинуты на ~30 секунд, мешает учиться но не блокер.", "gold": {"label": "bug", "urgency": "low", "needs_human": false}}
