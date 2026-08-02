@@ -34,6 +34,7 @@ npm run dev
 
 | Method | Path |
 |--------|------|
+| GET | `/api/health` |
 | POST | `/api/auth/register`, `/api/auth/login` |
 | CRUD | `/api/courses` |
 | POST | `/api/courses/{id}/lectures` (multipart audio → STT) |
@@ -41,10 +42,19 @@ npm run dev
 | POST | `/api/courses/{id}/materials/file` (`.txt` / `.md`) |
 | POST | `/api/courses/{id}/corpus/build` |
 | GET | `/api/courses/{id}/outline` |
+| GET | `/api/courses/{id}/source-summary` |
+| GET | `/api/courses/{id}/source-summary/export` (JSON download) |
 | POST/GET | `/api/courses/{id}/conspect` |
-| GET | `/api/courses/{id}/conspect/export` (Markdown download) |
+| GET | `/api/courses/{id}/conspect/export` (Markdown download, `text/markdown; charset=UTF-8`) |
 | POST | `/api/courses/{id}/ask` |
-| GET | `/api/stats` |
+| GET | `/api/stats` | includes `hasAnyConspect` (boolean for current user) |
+
+## Auth
+
+- **Register / login:** `POST /api/auth/register` and `POST /api/auth/login` with JSON `{ "username", "password" }`. Response includes a JWT `token`.
+- **Bearer header:** send `Authorization: Bearer <token>` on protected API calls (the UI `api()` helper does this automatically).
+- **Public:** `/api/auth/**`, `GET /api/health`, and CORS `OPTIONS /**`.
+- **Protected:** all other `/api/**` routes require a valid JWT.
 
 ## Демо
 

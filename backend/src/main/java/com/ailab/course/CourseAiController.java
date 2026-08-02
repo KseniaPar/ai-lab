@@ -20,19 +20,37 @@ public class CourseAiController {
     private final ConspectService conspectService;
     private final AskService askService;
     private final CourseOutlineService outlineService;
+    private final CourseSourceSummaryService sourceSummaryService;
 
     public CourseAiController(
             ConspectService conspectService,
             AskService askService,
-            CourseOutlineService outlineService) {
+            CourseOutlineService outlineService,
+            CourseSourceSummaryService sourceSummaryService) {
         this.conspectService = conspectService;
         this.askService = askService;
         this.outlineService = outlineService;
+        this.sourceSummaryService = sourceSummaryService;
     }
 
     @GetMapping("/outline")
     public Map<String, Object> outline(@PathVariable String courseId) {
         return outlineService.outline(courseId);
+    }
+
+    @GetMapping("/source-summary")
+    public Map<String, Object> sourceSummary(@PathVariable String courseId) {
+        return sourceSummaryService.sourceSummary(courseId);
+    }
+
+    @GetMapping("/source-summary/export")
+    public ResponseEntity<Map<String, Object>> exportSourceSummary(@PathVariable String courseId) {
+        Map<String, Object> payload = sourceSummaryService.sourceSummary(courseId);
+        String filename = "source-summary-" + courseId + ".json";
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(payload);
     }
 
     @PostMapping("/conspect")

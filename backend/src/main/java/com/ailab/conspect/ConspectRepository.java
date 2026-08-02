@@ -46,4 +46,17 @@ public class ConspectRepository {
                 courseId);
         return !rows.isEmpty();
     }
+
+    public boolean existsByUser(String userId) {
+        List<Integer> rows = jdbc.query(
+                """
+                SELECT 1 FROM conspects cs
+                JOIN courses c ON c.id = cs.course_id
+                WHERE c.user_id = ?
+                LIMIT 1
+                """,
+                (rs, i) -> 1,
+                userId);
+        return !rows.isEmpty();
+    }
 }

@@ -124,7 +124,7 @@ public class LectureService {
 
     public List<Map<String, Object>> list(String courseId) {
         courses.requireOwned(courseId);
-        return lectures.findByCourse(courseId).stream().map(this::toMap).toList();
+        return lectures.findByCourse(courseId).stream().map(this::toListMap).toList();
     }
 
     public Map<String, Object> get(String lectureId) {
@@ -139,6 +139,15 @@ public class LectureService {
                         "text", s.text(),
                         "ordinal", s.ordinal()))
                 .toList());
+        return map;
+    }
+
+    private Map<String, Object> toListMap(LectureRepository.LectureRow row) {
+        Map<String, Object> map = toMap(row);
+        String raw = (String) map.get("rawText");
+        if (raw != null && raw.length() > 500) {
+            map.put("rawText", raw.substring(0, 500));
+        }
         return map;
     }
 

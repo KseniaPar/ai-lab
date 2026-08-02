@@ -66,6 +66,9 @@ public class CorpusService {
     }
 
     public List<ChunkRepository.ChunkRow> retrieve(String courseId, String query) {
+        if (query == null || query.isBlank()) {
+            return List.of();
+        }
         List<ChunkRepository.ChunkRow> all = chunks.findByCourse(courseId);
         if (all.isEmpty()) {
             return List.of();

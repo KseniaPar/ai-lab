@@ -46,6 +46,8 @@ app:
     chunk-size: 800
     chunk-overlap: 120
     top-k: 6
+  ask:
+    rate-limit-per-minute: 30
 
 logging:
   level:

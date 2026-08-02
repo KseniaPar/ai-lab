@@ -15,7 +15,7 @@ class CitationTimestampTest {
 
     @Test
     void formatsZeroPaddedSeconds() throws Exception {
-        AskService ask = new AskService(null, null, null, null, null);
+        AskService ask = new AskService(null, null, null, null, null, null);
         Method m = AskService.class.getDeclaredMethod("formatTimestamp", Long.class);
         m.setAccessible(true);
         assertEquals("1:05", m.invoke(ask, 65_000L));

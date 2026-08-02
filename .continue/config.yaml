@@ -1,0 +1,102 @@
+name: Knowbase Local
+version: 1.0.0
+schema: v1
+
+# Day 4 — Continue.dev + Ollama for Knowbase
+# Workspace config: open this repo in Cursor/VS Code with Continue installed.
+# Global copy also lives at ~/.continue/config.yaml (synced by challenge scripts).
+
+models:
+  - name: Qwen2.5-Coder 7B (chat)
+    provider: ollama
+    model: qwen2.5-coder:7b
+    apiBase: http://127.0.0.1:11434
+    roles:
+      - chat
+      - edit
+      - apply
+    defaultCompletionOptions:
+      temperature: 0.2
+      topP: 0.9
+      contextLength: 8192
+      maxTokens: 2048
+
+  - name: Qwen2.5 14B (chat heavy)
+    provider: ollama
+    model: qwen2.5:14b
+    apiBase: http://127.0.0.1:11434
+    roles:
+      - chat
+      - edit
+    defaultCompletionOptions:
+      temperature: 0.2
+      topP: 0.9
+      contextLength: 8192
+      maxTokens: 2048
+
+  - name: DeepSeek-Coder 6.7B (chat)
+    provider: ollama
+    model: deepseek-coder:6.7b
+    apiBase: http://127.0.0.1:11434
+    roles:
+      - chat
+      - edit
+    defaultCompletionOptions:
+      temperature: 0.15
+      topP: 0.9
+      contextLength: 4096
+      maxTokens: 1536
+
+  - name: Qwen2.5-Coder 1.5B (autocomplete)
+    provider: ollama
+    model: qwen2.5-coder:1.5b
+    apiBase: http://127.0.0.1:11434
+    roles:
+      - autocomplete
+    autocompleteOptions:
+      debounceDelay: 300
+      maxPromptTokens: 1024
+      onlyMyCode: true
+      temperature: 0.1
+
+  - name: Nomic Embed
+    provider: ollama
+    model: nomic-embed-text:latest
+    apiBase: http://127.0.0.1:11434
+    roles:
+      - embed
+
+rules:
+  - name: Knowbase Day1 rules
+    # System prompt for local chat/edit — mirrors challenge/day4/LOCAL_SYSTEM_PROMPT.md
+    rule: |
+      You are a coding assistant for Knowbase (ai-lab).
+      Product: exam-prep knowledge platform — audio→STT→corpus→conspect→Q&A. No concept maps.
+      Stack: Java 17, Spring Boot 3.4, SQLite JdbcTemplate, JWT, OpenRouter; Vite vanilla JS.
+      Architecture: package-by-feature com.ailab.*; Controller→Service→Repository.
+      CourseService = ownership+CRUD only; aggregates use dedicated *Service.
+      Always courses.requireOwned(courseId). Russian errors as { "error": "..." }. SecurityException→403.
+      JSON camelCase / LinkedHashMap. Materials = lectures.source_type MATERIAL.
+      SQL only in @Repository, parameterized. No dual JdbcTemplate+Repository. No secrets in git.
+      New course APIs: dedicated service + CourseAiController + README API row.
+
+context:
+  - provider: code
+  - provider: docs
+  - provider: diff
+  - provider: terminal
+  - provider: problems
+  - provider: folder
+  - provider: codebase
+
+prompts:
+  - name: knowbase-feature
+    description: Day1-style feature generation for Knowbase
+    prompt: |
+      Follow Knowbase rules. Implement the requested course-scoped endpoint with a dedicated service,
+      requireOwned, camelCase LinkedHashMap response, and CourseAiController mapping. No UI unless asked.
+  - name: knowbase-bugfix
+    description: Day2-style bug fix profile
+    prompt: |
+      You are Bug Fix for Knowbase. Find root cause, minimal fix, suggest mvn test verification.
+      Response sections: Cause / Fix / Verification / Blast radius.

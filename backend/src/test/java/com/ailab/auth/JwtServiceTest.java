@@ -43,6 +43,14 @@ class JwtServiceTest {
     }
 
     @Test
+    void rejectExpiredToken() throws InterruptedException {
+        JwtService jwt = new JwtService("unit-test-secret-at-least-32-bytes!!", 1L);
+        String token = jwt.createToken("user-1", "alice");
+        Thread.sleep(50);
+        assertThrows(JwtException.class, () -> jwt.parse(token));
+    }
+
+    @Test
     void tokenIsCompactJwt() {
         JwtService jwt = new JwtService("unit-test-secret-at-least-32-bytes!!", 3_600_000L);
         String token = jwt.createToken("u", "n");

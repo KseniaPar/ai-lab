@@ -78,19 +78,26 @@
     }
 
     document.getElementById('create').onclick = async () => {
+      const err = document.getElementById('err');
+      const title = document.getElementById('title').value.trim();
+      if (!title) {
+        err.textContent = 'Введите название курса';
+        return;
+      }
       try {
         await api('/api/courses', {
           method: 'POST',
           body: JSON.stringify({
-            title: document.getElementById('title').value,
+            title,
             subject: document.getElementById('subject').value,
           }),
         });
+        err.textContent = '';
         document.getElementById('title').value = '';
         document.getElementById('subject').value = '';
         await refresh();
       } catch (e) {
-        document.getElementById('err').textContent = e.message;
+        err.textContent = e.message;
       }
     };
 

@@ -13,6 +13,7 @@
         <a href="/courses.html">← Курсы</a>
         <h1 id="courseTitle" style="margin:8px 0 0">Курс</h1>
         <p class="muted" id="courseSubject"></p>
+        <p class="muted" id="outlineCounts"></p>
       </div>
       <button class="secondary" id="logout">Выйти</button>
     </div>
@@ -91,6 +92,13 @@
       const c = await api(`/api/courses/${courseId}`);
       document.getElementById('courseTitle').textContent = c.title;
       document.getElementById('courseSubject').textContent = c.subject || '';
+    }
+
+    async function loadOutlineCounts() {
+      const o = await api(`/api/courses/${courseId}/outline`);
+      const conspect = o.hasConspect ? 'есть' : 'нет';
+      document.getElementById('outlineCounts').textContent =
+        `Материалы: ${o.materialsCount} · Чанки: ${o.chunksCount} · Конспект: ${conspect}`;
     }
 
     async function loadLectures() {
@@ -274,6 +282,7 @@
     };
 
     await loadCourse();
+    await loadOutlineCounts();
     await loadLectures();
   </script>
 </body>

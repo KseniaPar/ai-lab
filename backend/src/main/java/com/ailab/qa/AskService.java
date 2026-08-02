@@ -3,9 +3,9 @@ package com.ailab.qa;
 import com.ailab.corpus.ChunkRepository;
 import com.ailab.corpus.CorpusService;
 import com.ailab.course.CourseService;
+import com.ailab.auth.AuthContext;
 import com.ailab.llm.LlmGateway;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -21,24 +21,28 @@ public class AskService {
     private final CourseService courses;
     private final CorpusService corpus;
     private final LlmGateway llm;
-    private final JdbcTemplate jdbc;
+    private final QaTurnRepository qaTurns;
+    private final AskRateLimiter rateLimiter;
     private final ObjectMapper objectMapper;
 
     public AskService(
             CourseService courses,
             CorpusService corpus,
             LlmGateway llm,
-            JdbcTemplate jdbc,
+            QaTurnRepository qaTurns,
+            AskRateLimiter rateLimiter,
             ObjectMapper objectMapper) {
         this.courses = courses;
         this.corpus = corpus;
         this.llm = llm;
-        this.jdbc = jdbc;
+        this.qaTurns = qaTurns;
+        this.rateLimiter = rateLimiter;
         this.objectMapper = objectMapper;
     }
 
     public Map<String, Object> ask(String courseId, String question) {
         courses.requireOwned(courseId);
+        rateLimiter.check(AuthContext.requireUserId());
         if (question == null || question.isBlank()) {
             throw new IllegalArgumentException("question обязателен");
         }
@@ -82,12 +86,9 @@ public class AskService {
         String id = UUID.randomUUID().toString();
         String createdAt = Instant.now().toString();
         try {
-            jdbc.update(
-                    """
-                    INSERT INTO qa_turns(id, course_id, question, answer, citations_json, created_at)
-                    VALUES (?,?,?,?,?,?)
-                    """,
-                    id, courseId, question.trim(), answer, objectMapper.writeValueAsString(citations), createdAt);
+            qaTurns.insert(new QaTurnRepository.QaTurnRow(
+                    id, courseId, question.trim(), answer,
+                    objectMapper.writeValueAsString(citations), createdAt));
         } catch (Exception e) {
             throw new IllegalStateException("Не удалось сохранить Q&A: " + e.getMessage(), e);
         }
@@ -103,12 +104,6 @@ public class AskService {
     }
 
     private String formatTimestamp(Long startMs) {
-        if (startMs == null) {
-            return null;
-        }
-        long totalSec = startMs / 1000;
-        long mm = totalSec / 60;
-        long ss = totalSec % 60;
-        return String.format("%d:%02d", mm, ss);
+        return CitationTimestamps.format(startMs);
     }
 }
