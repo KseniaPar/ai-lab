@@ -1,0 +1,16 @@
+{"id": "R01", "kind": "easy", "text": "С карты списали подписку Pro дважды, нужен возврат.", "expect_route": "small", "gold": "billing"}
+{"id": "R02", "kind": "easy", "text": "Приложение падает при открытии раздела Курсы на iPhone.", "expect_route": "small", "gold": "bug"}
+{"id": "R03", "kind": "easy", "text": "Добавьте тёмную тему в веб-кабинет.", "expect_route": "small", "gold": "feature"}
+{"id": "R04", "kind": "easy", "text": "Не приходит письмо сброса пароля на anna@example.com.", "expect_route": "small", "gold": "access"}
+{"id": "R05", "kind": "easy", "text": "Где в документации лимит минут STT на тарифе Free?", "expect_route": "small", "gold": "other"}
+{"id": "R06", "kind": "easy", "text": "Нужен счёт-фактура за март на ООО Ромашка.", "expect_route": "small", "gold": "billing"}
+{"id": "R07", "kind": "borderline", "text": "Не могу оплатить счет — форма зависает на Submit и крутится вечно.", "expect_route": "strong", "gold": "bug"}
+{"id": "R08", "kind": "borderline", "text": "Коллега уволился: удалите доступ и перевыставьте invoice на нового плательщика.", "expect_route": "strong", "gold": "access"}
+{"id": "R09", "kind": "borderline", "text": "Промокод STUDENT50 не применяется на checkout, пишет что истёк.", "expect_route": "strong", "gold": "billing"}
+{"id": "R10", "kind": "borderline", "text": "Нужен read-only API-ключ к курсам для интеграции с нашей LMS.", "expect_route": "strong", "gold": "feature"}
+{"id": "R11", "kind": "noisy", "text": "ааааа ПОМОГИТЕ!!!!! всё сломалось((((", "expect_route": "strong", "gold": null}
+{"id": "R12", "kind": "noisy", "text": "asdf qwerty 12345 !@#$%", "expect_route": "strong", "gold": null}
+{"id": "R13", "kind": "noisy", "text": "Здравствуйте. Спасибо. До свидания.", "expect_route": "strong", "gold": null}
+{"id": "R14", "kind": "mixed", "text": "Upgrade прошёл, деньги списали, но в кабинете всё ещё Free и кнопка оплаты серая.", "expect_route": "strong", "gold": "billing"}
+{"id": "R15", "kind": "mixed", "text": "SSO через Google зависает на callback после согласия — белый экран.", "expect_route": "strong", "gold": "access"}
+{"id": "R16", "kind": "easy", "text": "Хочу отменить автопродление подписки Pro.", "expect_route": "small", "gold": "billing"}
