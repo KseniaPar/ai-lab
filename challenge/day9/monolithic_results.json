@@ -1,0 +1,305 @@
+{
+  "summary": {
+    "variant": "monolithic",
+    "model": "qwen2.5-coder:7b",
+    "cases": 10,
+    "valid_rate": 0.6,
+    "label_acc": 0.5,
+    "urgency_acc": 0.9,
+    "needs_human_acc": 1.0,
+    "all_fields_acc": 0.5,
+    "llm_calls_total": 10,
+    "latency_total_sec": 59.28,
+    "latency_avg_sec": 5.93
+  },
+  "results": [
+    {
+      "id": "M01",
+      "text": "СРОЧНО!!! Карту списали дважды за Pro, денег нет на еду, верните СЕГОДНЯ или подам в суд.",
+      "gold": {
+        "label": "billing",
+        "urgency": "high",
+        "needs_human": true
+      },
+      "scores": {
+        "label": true,
+        "urgency": true,
+        "needs_human": true
+      },
+      "variant": "monolithic",
+      "model": "qwen2.5-coder:7b",
+      "raw": "{\"label\":\"billing\",\"urgency\":\"high\",\"needs_human\":true,\"reason\":\"Угроза судебного разбирательства\"}",
+      "result": {
+        "label": "billing",
+        "urgency": "high",
+        "needs_human": true,
+        "reason": "Угроза судебного разбирательства"
+      },
+      "valid": true,
+      "errors": [],
+      "llm_calls": 1,
+      "latency_sec": 12.343,
+      "model_latency_sec": 12.343
+    },
+    {
+      "id": "M02",
+      "text": "После обновления iOS приложение падает при открытии Курсов. Лог во вложении.",
+      "gold": {
+        "label": "bug",
+        "urgency": "medium",
+        "needs_human": false
+      },
+      "scores": {
+        "label": true,
+        "urgency": true,
+        "needs_human": true
+      },
+      "variant": "monolithic",
+      "model": "qwen2.5-coder:7b",
+      "raw": "{\"label\":\"bug\",\"urgency\":\"medium\",\"needs_human\":false,\"reason\":\"Приложение падает после обновления iOS при открытии Курсов\"}",
+      "result": {
+        "label": "bug",
+        "urgency": "medium",
+        "needs_human": false,
+        "reason": "Приложение падает после обновления iOS при открытии Курсов"
+      },
+      "valid": true,
+      "errors": [],
+      "llm_calls": 1,
+      "latency_sec": 5.375,
+      "model_latency_sec": 5.375
+    },
+    {
+      "id": "M03",
+      "text": "Можно ли добавить тёмную тему? Не срочно, просто идея.",
+      "gold": {
+        "label": "feature",
+        "urgency": "low",
+        "needs_human": false
+      },
+      "scores": {
+        "label": true,
+        "urgency": true,
+        "needs_human": true
+      },
+      "variant": "monolithic",
+      "model": "qwen2.5-coder:7b",
+      "raw": "{\"label\":\"feature\",\"urgency\":\"low\",\"needs_human\":false,\"reason\":\"Предложение по улучшению дизайна\"}",
+      "result": {
+        "label": "feature",
+        "urgency": "low",
+        "needs_human": false,
+        "reason": "Предложение по улучшению дизайна"
+      },
+      "valid": true,
+      "errors": [],
+      "llm_calls": 1,
+      "latency_sec": 4.152,
+      "model_latency_sec": 4.152
+    },
+    {
+      "id": "M04",
+      "text": "Уволили сотрудника u_88421 — отзовите доступ к Prod ASAP, есть риск утечки.",
+      "gold": {
+        "label": "access",
+        "urgency": "high",
+        "needs_human": true
+      },
+      "scores": {
+        "label": true,
+        "urgency": true,
+        "needs_human": true
+      },
+      "variant": "monolithic",
+      "model": "qwen2.5-coder:7b",
+      "raw": "{\"label\":\"access\",\"urgency\":\"high\",\"needs_human\":true,\"reason\":\"Риск утечки данных при увольнении сотрудника\"}",
+      "result": {
+        "label": "access",
+        "urgency": "high",
+        "needs_human": true,
+        "reason": "Риск утечки данных при увольнении сотрудника"
+      },
+      "valid": true,
+      "errors": [],
+      "llm_calls": 1,
+      "latency_sec": 4.643,
+      "model_latency_sec": 4.643
+    },
+    {
+      "id": "M05",
+      "text": "Где в docs лимит STT на Free? Просто уточняю перед покупкой.",
+      "gold": {
+        "label": "other",
+        "urgency": "low",
+        "needs_human": false
+      },
+      "scores": {
+        "label": false,
+        "urgency": true,
+        "needs_human": true
+      },
+      "variant": "monolithic",
+      "model": "qwen2.5-coder:7b",
+      "raw": "{\"label\":\"billing|other\",\"urgency\":\"low\",\"needs_human\":false,\"reason\":\"Уточнение информации о лимите STT для бесплатной версии\"}",
+      "result": {
+        "label": "billing|other",
+        "urgency": "low",
+        "needs_human": false,
+        "reason": "Уточнение информации о лимите STT для бесплатной версии"
+      },
+      "valid": false,
+      "errors": [
+        "bad_label"
+      ],
+      "llm_calls": 1,
+      "latency_sec": 6.091,
+      "model_latency_sec": 6.09
+    },
+    {
+      "id": "M06",
+      "text": "Не проходит оплата картой + форма checkout зависает. Клиент Enterprise, эскалация.",
+      "gold": {
+        "label": "bug",
+        "urgency": "high",
+        "needs_human": true
+      },
+      "scores": {
+        "label": false,
+        "urgency": true,
+        "needs_human": true
+      },
+      "variant": "monolithic",
+      "model": "qwen2.5-coder:7b",
+      "raw": "{\"label\":\"billing|bug\",\"urgency\":\"high\",\"needs_human\":true,\"reason\":\"Эскалация\"}",
+      "result": {
+        "label": "billing|bug",
+        "urgency": "high",
+        "needs_human": true,
+        "reason": "Эскалация"
+      },
+      "valid": false,
+      "errors": [
+        "bad_label"
+      ],
+      "llm_calls": 1,
+      "latency_sec": 3.791,
+      "model_latency_sec": 3.791
+    },
+    {
+      "id": "M07",
+      "text": "Промокод STUDENT50 не применяется на checkout, пишет истёк, хотя баннер ещё висит.",
+      "gold": {
+        "label": "billing",
+        "urgency": "medium",
+        "needs_human": false
+      },
+      "scores": {
+        "label": false,
+        "urgency": false,
+        "needs_human": true
+      },
+      "variant": "monolithic",
+      "model": "qwen2.5-coder:7b",
+      "raw": "{\"label\":\"billing|bug\",\"urgency\":\"low\",\"needs_human\":false,\"reason\":\"Промокод STUDENT50 не применяется на checkout, пишет истёк, хотя баннер ещё висит.\"}",
+      "result": {
+        "label": "billing|bug",
+        "urgency": "low",
+        "needs_human": false,
+        "reason": "Промокод STUDENT50 не применяется на checkout, пишет истёк, хотя баннер ещё висит."
+      },
+      "valid": false,
+      "errors": [
+        "bad_label"
+      ],
+      "llm_calls": 1,
+      "latency_sec": 6.927,
+      "model_latency_sec": 6.927
+    },
+    {
+      "id": "M08",
+      "text": "Нужен webhook conspect.ready для CRM и роль viewer в курсе — roadmap ok?",
+      "gold": {
+        "label": "feature",
+        "urgency": "low",
+        "needs_human": false
+      },
+      "scores": {
+        "label": false,
+        "urgency": true,
+        "needs_human": true
+      },
+      "variant": "monolithic",
+      "model": "qwen2.5-coder:7b",
+      "raw": "{\"label\":\"access\",\"urgency\":\"low\",\"needs_human\":false,\"reason\":\"Запрос на добавление webhook и изменение роли\"}",
+      "result": {
+        "label": "access",
+        "urgency": "low",
+        "needs_human": false,
+        "reason": "Запрос на добавление webhook и изменение роли"
+      },
+      "valid": true,
+      "errors": [],
+      "llm_calls": 1,
+      "latency_sec": 4.705,
+      "model_latency_sec": 4.705
+    },
+    {
+      "id": "M09",
+      "text": "SSO Google белый экран на callback, половина команды не может войти с утра.",
+      "gold": {
+        "label": "access",
+        "urgency": "high",
+        "needs_human": true
+      },
+      "scores": {
+        "label": false,
+        "urgency": true,
+        "needs_human": true
+      },
+      "variant": "monolithic",
+      "model": "qwen2.5-coder:7b",
+      "raw": "{\"label\":\"access|bug\",\"urgency\":\"high\",\"needs_human\":true,\"reason\":\"Половина команды не может войти в систему из-за SSO Google белого экрана на callback.\"}",
+      "result": {
+        "label": "access|bug",
+        "urgency": "high",
+        "needs_human": true,
+        "reason": "Половина команды не может войти в систему из-за SSO Google белого экрана на callback."
+      },
+      "valid": false,
+      "errors": [
+        "bad_label"
+      ],
+      "llm_calls": 1,
+      "latency_sec": 6.116,
+      "model_latency_sec": 6.116
+    },
+    {
+      "id": "M10",
+      "text": "Таймкоды в цитатах сдвинуты на ~30 секунд, мешает учиться но не блокер.",
+      "gold": {
+        "label": "bug",
+        "urgency": "low",
+        "needs_human": false
+      },
+      "scores": {
+        "label": true,
+        "urgency": true,
+        "needs_human": true
+      },
+      "variant": "monolithic",
+      "model": "qwen2.5-coder:7b",
+      "raw": "{\"label\":\"bug\",\"urgency\":\"low\",\"needs_human\":false,\"reason\":\"Сдвиг таймкодов в цитатах мешает обучению\"}",
+      "result": {
+        "label": "bug",
+        "urgency": "low",
+        "needs_human": false,
+        "reason": "Сдвиг таймкодов в цитатах мешает обучению"
+      },
+      "valid": true,
+      "errors": [],
+      "llm_calls": 1,
+      "latency_sec": 5.137,
+      "model_latency_sec": 5.137
+    }
+  ]
+}
