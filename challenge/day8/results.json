@@ -1,0 +1,712 @@
+{
+  "metrics": {
+    "small_model": "qwen2.5-coder:1.5b",
+    "strong_model": "qwen2.5:14b",
+    "confidence_threshold": 0.7,
+    "cases": 16,
+    "stayed_on_small": 10,
+    "escalated_to_strong": 6,
+    "small_share": 0.625,
+    "llm_calls_total": 38,
+    "latency_total_sec": 105.38,
+    "latency_avg_sec": 6.59,
+    "by_kind": {
+      "borderline": {
+        "n": 4,
+        "small": 3,
+        "strong": 1
+      },
+      "easy": {
+        "n": 7,
+        "small": 4,
+        "strong": 3
+      },
+      "mixed": {
+        "n": 2,
+        "small": 1,
+        "strong": 1
+      },
+      "noisy": {
+        "n": 3,
+        "small": 2,
+        "strong": 1
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "R01",
+      "kind": "easy",
+      "text": "С карты списали подписку Pro дважды, нужен возврат.",
+      "expect_route": "small",
+      "gold": "billing",
+      "label_match_gold": true,
+      "routed_to": "strong",
+      "escalated": true,
+      "escalate_reason": "redundancy_disagreement:billing/bug",
+      "decision": "ACCEPT",
+      "label": "billing",
+      "confidence": 0.95,
+      "llm_calls": 3,
+      "latency_sec": 12.891,
+      "final": {
+        "label": "billing",
+        "reason": "Пользователь столкнулся с двойным списанием подписки и требует возврата средств.",
+        "confidence": 0.95
+      },
+      "trace": [
+        {
+          "step": "small_1",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"billing\",\n  \"reason\": \"Пользователь списал подписку Pro дважды и требует возврата.\",\n  \"confidence\": 1.0\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.695
+        },
+        {
+          "step": "small_2",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"bug\",\n  \"reason\": \"Возврат подписки Pro по ошибке\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.368
+        },
+        {
+          "step": "strong",
+          "model": "qwen2.5:14b",
+          "raw": "{\"label\":\"billing\",\"reason\":\"Пользователь столкнулся с двойным списанием подписки и требует возврата средств.\",\"confidence\":0.95}",
+          "ok": true,
+          "errs": [],
+          "latency": 9.827
+        }
+      ]
+    },
+    {
+      "id": "R02",
+      "kind": "easy",
+      "text": "Приложение падает при открытии раздела Курсы на iPhone.",
+      "expect_route": "small",
+      "gold": "bug",
+      "label_match_gold": true,
+      "routed_to": "small",
+      "escalated": false,
+      "escalate_reason": "confident_on_small",
+      "decision": "ACCEPT",
+      "label": "bug",
+      "confidence": 0.95,
+      "llm_calls": 2,
+      "latency_sec": 3.824,
+      "final": {
+        "label": "bug",
+        "reason": "Используемый iOS версия не поддерживает функцию открытия раздела Курсы в приложении.",
+        "confidence": 0.95
+      },
+      "trace": [
+        {
+          "step": "small_1",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"bug\",\n  \"reason\": \"Используемый iOS версия не поддерживает функцию открытия раздела Курсы в приложении.\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 2.439
+        },
+        {
+          "step": "small_2",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"bug\",\n  \"reason\": \"App crashes when opening the Courses section on iOS.\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.385
+        }
+      ]
+    },
+    {
+      "id": "R03",
+      "kind": "easy",
+      "text": "Добавьте тёмную тему в веб-кабинет.",
+      "expect_route": "small",
+      "gold": "feature",
+      "label_match_gold": true,
+      "routed_to": "small",
+      "escalated": false,
+      "escalate_reason": "confident_on_small",
+      "decision": "ACCEPT",
+      "label": "feature",
+      "confidence": 0.95,
+      "llm_calls": 2,
+      "latency_sec": 3.268,
+      "final": {
+        "label": "feature",
+        "reason": "Веб-кабинет теперь имеет темную тему.",
+        "confidence": 0.95
+      },
+      "trace": [
+        {
+          "step": "small_1",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"feature\",\n  \"reason\": \"Веб-кабинет теперь имеет темную тему.\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.645
+        },
+        {
+          "step": "small_2",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"feature\",\n  \"reason\": \"Добавление темной темы в веб-кабинет\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.623
+        }
+      ]
+    },
+    {
+      "id": "R04",
+      "kind": "easy",
+      "text": "Не приходит письмо сброса пароля на anna@example.com.",
+      "expect_route": "small",
+      "gold": "access",
+      "label_match_gold": true,
+      "routed_to": "strong",
+      "escalated": true,
+      "escalate_reason": "redundancy_disagreement:bug/billing",
+      "decision": "ACCEPT",
+      "label": "access",
+      "confidence": 0.9,
+      "llm_calls": 3,
+      "latency_sec": 11.834,
+      "final": {
+        "label": "access",
+        "reason": "Пользователь не может получить письмо сброса пароля.",
+        "confidence": 0.9
+      },
+      "trace": [
+        {
+          "step": "small_1",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"bug\",\n  \"reason\": \"Пользователь не получает письмо сброса пароля\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.89
+        },
+        {
+          "step": "small_2",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"billing\",\n  \"reason\": \"The user is unable to receive a password reset email.\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.494
+        },
+        {
+          "step": "strong",
+          "model": "qwen2.5:14b",
+          "raw": "{\"label\":\"access\",\"reason\":\"Пользователь не может получить письмо сброса пароля.\",\"confidence\":0.9}",
+          "ok": true,
+          "errs": [],
+          "latency": 8.45
+        }
+      ]
+    },
+    {
+      "id": "R05",
+      "kind": "easy",
+      "text": "Где в документации лимит минут STT на тарифе Free?",
+      "expect_route": "small",
+      "gold": "other",
+      "label_match_gold": false,
+      "routed_to": "strong",
+      "escalated": true,
+      "escalate_reason": "redundancy_disagreement:billing/bug|strong_failed",
+      "decision": "REJECT",
+      "label": "billing",
+      "confidence": 0.95,
+      "llm_calls": 3,
+      "latency_sec": 12.425,
+      "final": {
+        "label": "billing",
+        "reason": "В документации нет информации о лимите минут STT на бесплатном тарифе.",
+        "confidence": 0.95
+      },
+      "trace": [
+        {
+          "step": "small_1",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "{\n  \"label\": \"billing\",\n  \"reason\": \"В документации нет информации о лимите минут STT на бесплатном тарифе.\",\n  \"confidence\": 0.95\n}",
+          "ok": true,
+          "errs": [],
+          "latency": 1.953
+        },
+        {
+          "step": "small_2",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"bug\",\n  \"reason\": \"Такого ограничения нет в официальной документации для тарифа Free.\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.818
+        },
+        {
+          "step": "strong",
+          "model": "qwen2.5:14b",
+          "raw": "{\"label\":\"documentation\",\"reason\":\"Пользователь ищет информацию о лимите использования STT в документации.\",\"confidence\":0.9}",
+          "ok": false,
+          "errs": [
+            "bad_label:'documentation'"
+          ],
+          "latency": 8.654
+        }
+      ]
+    },
+    {
+      "id": "R06",
+      "kind": "easy",
+      "text": "Нужен счёт-фактура за март на ООО Ромашка.",
+      "expect_route": "small",
+      "gold": "billing",
+      "label_match_gold": true,
+      "routed_to": "small",
+      "escalated": false,
+      "escalate_reason": "confident_on_small",
+      "decision": "ACCEPT",
+      "label": "billing",
+      "confidence": 1.0,
+      "llm_calls": 2,
+      "latency_sec": 4.417,
+      "final": {
+        "label": "billing",
+        "reason": "Запрос на создание счёта-фактуры для оплаты услуг в марте для компании ООО Ромашка.",
+        "confidence": 1.0
+      },
+      "trace": [
+        {
+          "step": "small_1",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"billing\",\n  \"reason\": \"Запрос на создание счёта-фактуры для оплаты услуг в марте для компании ООО Ромашка.\",\n  \"confidence\": 1.0\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 2.838
+        },
+        {
+          "step": "small_2",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "{\"label\":\"billing\",\"reason\":\"Требуется счёт-фактура для оплаты услуг в течение месяца, включая расходы по марту на ООО Ромашка.\",\"confidence\":1}",
+          "ok": true,
+          "errs": [],
+          "latency": 1.578
+        }
+      ]
+    },
+    {
+      "id": "R07",
+      "kind": "borderline",
+      "text": "Не могу оплатить счет — форма зависает на Submit и крутится вечно.",
+      "expect_route": "strong",
+      "gold": "bug",
+      "label_match_gold": false,
+      "routed_to": "small",
+      "escalated": false,
+      "escalate_reason": "confident_on_small",
+      "decision": "ACCEPT",
+      "label": "billing",
+      "confidence": 0.95,
+      "llm_calls": 2,
+      "latency_sec": 3.198,
+      "final": {
+        "label": "billing",
+        "reason": "The payment form is stuck in an infinite loop.",
+        "confidence": 0.95
+      },
+      "trace": [
+        {
+          "step": "small_1",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"billing\",\n  \"reason\": \"The payment form is stuck in an infinite loop.\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.574
+        },
+        {
+          "step": "small_2",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"billing\",\n  \"reason\": \"Ошибка при оплате счета, форма зависает на Submit и крутится вечно\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.624
+        }
+      ]
+    },
+    {
+      "id": "R08",
+      "kind": "borderline",
+      "text": "Коллега уволился: удалите доступ и перевыставьте invoice на нового плательщика.",
+      "expect_route": "strong",
+      "gold": "access",
+      "label_match_gold": false,
+      "routed_to": "small",
+      "escalated": false,
+      "escalate_reason": "confident_on_small",
+      "decision": "ACCEPT",
+      "label": "bug",
+      "confidence": 0.95,
+      "llm_calls": 2,
+      "latency_sec": 4.203,
+      "final": {
+        "label": "bug",
+        "reason": "Удаление доступа и перевыставление invoice на нового плательщика приводит к ошибке в системе.",
+        "confidence": 0.95
+      },
+      "trace": [
+        {
+          "step": "small_1",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"bug\",\n  \"reason\": \"Удаление доступа и перевыставление invoice на нового плательщика приводит к ошибке в системе.\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 2.374
+        },
+        {
+          "step": "small_2",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"bug\",\n  \"reason\": \"Удаление доступа и перевыставление invoice на нового плательщика приводит к проблемам в работе системы.\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.829
+        }
+      ]
+    },
+    {
+      "id": "R09",
+      "kind": "borderline",
+      "text": "Промокод STUDENT50 не применяется на checkout, пишет что истёк.",
+      "expect_route": "strong",
+      "gold": "billing",
+      "label_match_gold": false,
+      "routed_to": "strong",
+      "escalated": true,
+      "escalate_reason": "redundancy_disagreement:billing/bug",
+      "decision": "ACCEPT",
+      "label": "bug",
+      "confidence": 0.9,
+      "llm_calls": 3,
+      "latency_sec": 12.938,
+      "final": {
+        "label": "bug",
+        "reason": "Промокод STUDENT50 недействителен из-за сообщения о том, что он истек.",
+        "confidence": 0.9
+      },
+      "trace": [
+        {
+          "step": "small_1",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"billing\",\n  \"reason\": \"Promo code STUDENT50 is not applied on checkout and says it has expired.\",\n  \"confidence\": 1.0\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.897
+        },
+        {
+          "step": "small_2",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"bug\",\n  \"reason\": \"Promo code STUDENT50 does not work on checkout and states it has expired.\",\n  \"confidence\": 1.0\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.532
+        },
+        {
+          "step": "strong",
+          "model": "qwen2.5:14b",
+          "raw": "{\"label\":\"bug\",\"reason\":\"Промокод STUDENT50 недействителен из-за сообщения о том, что он истек.\",\"confidence\":0.9}",
+          "ok": true,
+          "errs": [],
+          "latency": 9.509
+        }
+      ]
+    },
+    {
+      "id": "R10",
+      "kind": "borderline",
+      "text": "Нужен read-only API-ключ к курсам для интеграции с нашей LMS.",
+      "expect_route": "strong",
+      "gold": "feature",
+      "label_match_gold": false,
+      "routed_to": "small",
+      "escalated": false,
+      "escalate_reason": "confident_on_small",
+      "decision": "ACCEPT",
+      "label": "billing",
+      "confidence": 0.95,
+      "llm_calls": 2,
+      "latency_sec": 3.685,
+      "final": {
+        "label": "billing",
+        "reason": "API-ключ необходим для доступа к курсам в вашей LMS.",
+        "confidence": 0.95
+      },
+      "trace": [
+        {
+          "step": "small_1",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"billing\",\n  \"reason\": \"API-ключ необходим для доступа к курсам в вашей LMS.\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.836
+        },
+        {
+          "step": "small_2",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"billing\",\n  \"reason\": \"API-ключ необходим для доступа к курсам в вашей LMS через систему billing.\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.848
+        }
+      ]
+    },
+    {
+      "id": "R11",
+      "kind": "noisy",
+      "text": "ааааа ПОМОГИТЕ!!!!! всё сломалось((((",
+      "expect_route": "strong",
+      "gold": null,
+      "label_match_gold": null,
+      "routed_to": "small",
+      "escalated": false,
+      "escalate_reason": "confident_on_small",
+      "decision": "ACCEPT",
+      "label": "bug",
+      "confidence": 0.95,
+      "llm_calls": 2,
+      "latency_sec": 2.775,
+      "final": {
+        "label": "bug",
+        "reason": "The system is not functioning properly, and all features are broken.",
+        "confidence": 0.95
+      },
+      "trace": [
+        {
+          "step": "small_1",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"bug\",\n  \"reason\": \"The system is not functioning properly, and all features are broken.\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.633
+        },
+        {
+          "step": "small_2",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "{\n  \"label\": \"bug\",\n  \"reason\": \"Service is broken, no response to questions.\",\n  \"confidence\": 1.0\n}",
+          "ok": true,
+          "errs": [],
+          "latency": 1.143
+        }
+      ]
+    },
+    {
+      "id": "R12",
+      "kind": "noisy",
+      "text": "asdf qwerty 12345 !@#$%",
+      "expect_route": "strong",
+      "gold": null,
+      "label_match_gold": null,
+      "routed_to": "small",
+      "escalated": false,
+      "escalate_reason": "confident_on_small",
+      "decision": "ACCEPT",
+      "label": "bug",
+      "confidence": 0.9,
+      "llm_calls": 2,
+      "latency_sec": 2.427,
+      "final": {
+        "label": "bug",
+        "reason": "Invalid characters found in the input.",
+        "confidence": 0.9
+      },
+      "trace": [
+        {
+          "step": "small_1",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"bug\",\n  \"reason\": \"Invalid characters found in the input.\",\n  \"confidence\": 0.9\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.324
+        },
+        {
+          "step": "small_2",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "{\"label\":\"bug\",\"reason\":\"Некорректный ввод данных\", \"confidence\":0.9}",
+          "ok": true,
+          "errs": [],
+          "latency": 1.103
+        }
+      ]
+    },
+    {
+      "id": "R13",
+      "kind": "noisy",
+      "text": "Здравствуйте. Спасибо. До свидания.",
+      "expect_route": "strong",
+      "gold": null,
+      "label_match_gold": null,
+      "routed_to": "strong",
+      "escalated": true,
+      "escalate_reason": "redundancy_disagreement:billing/other",
+      "decision": "ACCEPT",
+      "label": "other",
+      "confidence": 0.9,
+      "llm_calls": 3,
+      "latency_sec": 9.943,
+      "final": {
+        "label": "other",
+        "reason": "Сообщение не содержит конкретной информации для классификации.",
+        "confidence": 0.9
+      },
+      "trace": [
+        {
+          "step": "small_1",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"billing\",\n  \"reason\": \"Thank you for contacting us.\",\n  \"confidence\": 1.0\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.598
+        },
+        {
+          "step": "small_2",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"other\",\n  \"reason\": \"Thank you for contacting us. Goodbye.\",\n  \"confidence\": 1.0\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.339
+        },
+        {
+          "step": "strong",
+          "model": "qwen2.5:14b",
+          "raw": "{\"label\":\"other\",\"reason\":\"Сообщение не содержит конкретной информации для классификации.\",\"confidence\":0.9}",
+          "ok": true,
+          "errs": [],
+          "latency": 7.006
+        }
+      ]
+    },
+    {
+      "id": "R14",
+      "kind": "mixed",
+      "text": "Upgrade прошёл, деньги списали, но в кабинете всё ещё Free и кнопка оплаты серая.",
+      "expect_route": "strong",
+      "gold": "billing",
+      "label_match_gold": true,
+      "routed_to": "strong",
+      "escalated": true,
+      "escalate_reason": "redundancy_disagreement:bug/billing",
+      "decision": "ACCEPT",
+      "label": "billing",
+      "confidence": 0.9,
+      "llm_calls": 3,
+      "latency_sec": 11.537,
+      "final": {
+        "label": "billing",
+        "reason": "После пополнения счета статус не обновляется.",
+        "confidence": 0.9
+      },
+      "trace": [
+        {
+          "step": "small_1",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"bug\",\n  \"reason\": \"Free status and payment button not functioning as expected after upgrade\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.597
+        },
+        {
+          "step": "small_2",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"billing\",\n  \"reason\": \"Free service remains in the account and payment button is grayed out.\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.481
+        },
+        {
+          "step": "strong",
+          "model": "qwen2.5:14b",
+          "raw": "{\"label\":\"billing\",\"reason\":\"После пополнения счета статус не обновляется.\",\"confidence\":0.9}",
+          "ok": true,
+          "errs": [],
+          "latency": 8.459
+        }
+      ]
+    },
+    {
+      "id": "R15",
+      "kind": "mixed",
+      "text": "SSO через Google зависает на callback после согласия — белый экран.",
+      "expect_route": "strong",
+      "gold": "access",
+      "label_match_gold": false,
+      "routed_to": "small",
+      "escalated": false,
+      "escalate_reason": "confident_on_small",
+      "decision": "ACCEPT",
+      "label": "bug",
+      "confidence": 0.95,
+      "llm_calls": 2,
+      "latency_sec": 2.865,
+      "final": {
+        "label": "bug",
+        "reason": "Callback URL not working after user consent",
+        "confidence": 0.95
+      },
+      "trace": [
+        {
+          "step": "small_1",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"bug\",\n  \"reason\": \"Callback URL not working after user consent\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.455
+        },
+        {
+          "step": "small_2",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"bug\",\n  \"reason\": \"Callback URL is not redirecting as expected after user agreement.\",\n  \"confidence\": 0.9\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.41
+        }
+      ]
+    },
+    {
+      "id": "R16",
+      "kind": "easy",
+      "text": "Хочу отменить автопродление подписки Pro.",
+      "expect_route": "small",
+      "gold": "billing",
+      "label_match_gold": true,
+      "routed_to": "small",
+      "escalated": false,
+      "escalate_reason": "confident_on_small",
+      "decision": "ACCEPT",
+      "label": "billing",
+      "confidence": 0.95,
+      "llm_calls": 2,
+      "latency_sec": 3.153,
+      "final": {
+        "label": "billing",
+        "reason": "Пользователь хочет отменить автопродление подписки Pro.",
+        "confidence": 0.95
+      },
+      "trace": [
+        {
+          "step": "small_1",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"billing\",\n  \"reason\": \"Пользователь хочет отменить автопродление подписки Pro.\",\n  \"confidence\": 0.95\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.856
+        },
+        {
+          "step": "small_2",
+          "model": "qwen2.5-coder:1.5b",
+          "raw": "```json\n{\n  \"label\": \"billing\",\n  \"reason\": \"Отмена автопродления подписки Pro\",\n  \"confidence\": 1\n}\n```",
+          "ok": true,
+          "errs": [],
+          "latency": 1.297
+        }
+      ]
+    }
+  ]
+}
