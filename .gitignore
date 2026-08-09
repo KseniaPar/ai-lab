@@ -11,6 +11,8 @@ frontend/dist/
 backend-run.*
 .env
 application-local.yml
+challenge/day11/telegram-local.txt
+challenge/day11/data/
 *.db
 uploads/
 .vscode/
