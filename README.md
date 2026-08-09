@@ -66,3 +66,12 @@ npm run dev
 ## Репозиторий
 
 Часть **AI Advent Challenge Advanced**. Ветки челленджа (`day1`…) — отдельно, после стабилизации `main`.
+
+## Второй проект в репо: «На Глазок»
+
+Telegram-бот калорий + LLM Gateway — модуль [`na-glazok/`](na-glazok/README.md) (не путать с Knowbase).
+
+```powershell
+python -u na-glazok/gateway.py
+python -u na-glazok/bot.py
+```
