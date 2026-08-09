@@ -26,7 +26,8 @@ AUDIT_LOG_PATH = MODULE_DIR / "audit.jsonl"
 REPO_ROOT = MODULE_DIR.parent
 
 RATE_LIMIT_STORE: dict[str, list[float]] = {}
-LIMIT_REQUESTS = 5
+# Day14 execution loop: set GATEWAY_RATE_LIMIT=40 (2+ LLM calls per attempt).
+LIMIT_REQUESTS = int(os.environ.get("GATEWAY_RATE_LIMIT", "5"))
 LIMIT_WINDOW = 60
 
 # gpt-4o-mini: $0.15 / 1M input, $0.60 / 1M output → per 1K tokens
@@ -45,8 +46,8 @@ SYSTEM_NUTRITIONIST = (
 )
 
 REGEX_SECRETS = {
-    # hyphens allowed: real keys look like sk-proj-...
-    "OPENAI_KEY": r"(sk-[a-zA-Z0-9\-]{20,})",
+    # hyphens allowed; {10,} ловит и короткие sk-proj-… из тестов day14
+    "OPENAI_KEY": r"(sk-[a-zA-Z0-9\-]{10,})",
     "AWS_KEY": r"(AKIA[0-9A-Z]{16})",
     "GITHUB_TOKEN": r"(ghp_[a-zA-Z0-9]{36})",
 }

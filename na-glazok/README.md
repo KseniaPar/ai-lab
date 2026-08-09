@@ -9,6 +9,8 @@ Telegram-бот калорий + защитный LLM Gateway. Knowbase оста
 | `gateway.py` | FastAPI proxy `/v1/chat/completions` (Input/Output Guard, rate limit, cost) |
 | `bot.py` | Telegram-бот (aiogram) |
 | `llm_client.py` | Клиент → по умолчанию gateway `http://127.0.0.1:8000` |
+| `execution_loop.py` | Day14: generate → validate → security → commit |
+| `security_prompt.py` | Промпт ИИ-Инспектора |
 | `calorie_core.py` | Промпты baseline/hardened |
 | `memory.py` | SQLite-память чата |
 | `test_gateway.py` | 10 автотестов шлюза |
