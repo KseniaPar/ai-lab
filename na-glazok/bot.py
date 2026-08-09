@@ -12,7 +12,8 @@ from aiogram.enums import ChatAction, ParseMode
 from aiogram.filters import Command, CommandStart
 from aiogram.types import Message
 
-from calorie_core import WELCOME, reply_calories
+from calorie_core import WELCOME
+from execution_loop import run_execution_loop
 from memory import (
     add_message,
     clear_chat,
@@ -117,27 +118,22 @@ async def on_food(message: Message, bot: Bot) -> None:
     status = await message.answer("Секунду, считаю калории…", parse_mode=None)
 
     try:
-        reply, _latency, _model = await asyncio.to_thread(
-            reply_calories,
+        loop_res = await asyncio.to_thread(
+            run_execution_loop,
             text,
             mode=mode,
             history=prior,
             message_stamp=stamp,
             user_id=str(chat_id),
         )
-        reply = strip_md_fences(reply)
+        reply = strip_md_fences(loop_res.report)
         add_message(chat_id, "user", text, msg_time)
         add_message(chat_id, "assistant", reply, msg_time)
-        await safe_edit(status, reply, html=True)
+        await safe_edit(status, reply, html=not loop_res.blocked_by_gateway)
     except Exception as exc:
         log.exception("LLM error")
         detail = str(exc)
-        if "400" in detail and "Security Violation" in detail:
-            user_msg = (
-                "Запрос заблокирован защитным шлюзом (секрет/ключ в тексте).\n"
-                "Убери API-ключи из сообщения и попробуй снова."
-            )
-        elif "429" in detail:
+        if "429" in detail:
             user_msg = "Слишком много запросов. Подожди минуту и попробуй снова."
         else:
             user_msg = (
@@ -170,7 +166,7 @@ async def main() -> None:
         raise RuntimeError("Не удалось подключиться к api.telegram.org")
 
     log.info(
-        "Bot @%s started via gateway %s",
+        "Bot @%s started via gateway %s (execution loop + security step)",
         me.username,
         os.environ.get("LLM_GATEWAY_URL") or "http://127.0.0.1:8000/v1",
     )
