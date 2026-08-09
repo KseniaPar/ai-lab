@@ -16,3 +16,6 @@ challenge/day11/data/
 *.db
 uploads/
 .vscode/
+na-glazok/telegram-local.txt
+na-glazok/audit.jsonl
+challenge/**/telegram-local.txt
